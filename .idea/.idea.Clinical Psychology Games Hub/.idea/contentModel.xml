@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ContentModelStore">
+    <e p="C:\Users\aminsaveh\.Rider2019.3\system\extResources" t="IncludeRecursive" />
+    <e p="C:\Users\aminsaveh\.Rider2019.3\system\resharper-host\local\Transient\ReSharperHost\v193\SolutionCaches\_Clinical Psychology Games Hub.113991118.00" t="ExcludeRecursive" />
+    <e p="F:\Unity-Projects\Clinical Psychology Games Hub" t="IncludeRecursive">
+      <e p="Assembly-CSharp-Editor-firstpass.csproj" t="IncludeRecursive" />
+      <e p="Assembly-CSharp-firstpass.csproj" t="IncludeRecursive" />
+      <e p="Assembly-CSharp.csproj" t="IncludeRecursive" />
+      <e p="Assets" t="Include">
+        <e p="KidsRoom" t="Include">
+          <e p="Materials" t="Include" />
+          <e p="Mesh" t="Include">
+            <e p="00" t="Include" />
+            <e p="Fruniture" t="Include" />
+            <e p="prop" t="Include" />
+          </e>
+          <e p="Prefab" t="Include">
+            <e p="00" t="Include" />
+            <e p="furniture" t="Include" />
+            <e p="prop" t="Include" />
+          </e>
+          <e p="Room_Unity" t="Include" />
+        </e>
+        <e p="Modern School Gym" t="Include">
+          <e p="Materials" t="Include" />
+          <e p="Meshes" t="Include" />
+          <e p="Prefabs" t="Include" />
+          <e p="Scenes" t="Include">
+            <e p="DemoScene" t="Include" />
+          </e>
+          <e p="Textures" t="Include" />
+        </e>
+        <e p="Plugins" t="Include">
+          <e p="Editor" t="Include">
+            <e p="JetBrains" t="Include" />
+          </e>
+        </e>
+        <e p="scripts" t="Include">
+          <e p="CubeController.cs" t="Include" />
+          <e p="Grabber.cs" t="Include" />
+        </e>
+        <e p="XR" t="Include">
+          <e p="Loaders" t="Include" />
+          <e p="Settings" t="Include" />
+        </e>
+        <e p="XRI" t="Include">
+          <e p="Settings" t="Include">
+            <e p="Resources" t="Include" />
+          </e>
+        </e>
+      </e>
+      <e p="Clinical Psychology Games Hub.sln" t="IncludeFlat" />
+      <e p="obj" t="ExcludeRecursive" />
+      <e p="Packages" t="ExcludeRecursive" />
+      <e p="Temp\Bin" t="ExcludeRecursive" />
+    </e>
+  </component>
+</project>
