@@ -58,6 +58,11 @@ public class CubeController : MonoBehaviour
         }
     }
 
+    private void Start()
+    {
+        TogglePlaceholderColliders(false);
+    }
+
     // Update is called once per frame
     void Update()
     {
@@ -72,6 +77,7 @@ public class CubeController : MonoBehaviour
                         return;
                     }
                     selectedCube = hit.collider.gameObject.GetComponent<Cube>();
+                    TogglePlaceholderColliders(true);
                     Cursor.visible = false;
                 }
             }
@@ -80,6 +86,7 @@ public class CubeController : MonoBehaviour
                     SnapToPlaceholder();
                     Cursor.visible = true;
                     selectedCube = null;
+                    TogglePlaceholderColliders(false);
                 }
             
                 if (Input.GetMouseButtonUp(1))
@@ -216,5 +223,13 @@ public class CubeController : MonoBehaviour
         var diagonal = max - min;
         volume = diagonal.x * diagonal.y * diagonal.z;
         return volume;
+    }
+
+    private void TogglePlaceholderColliders(bool isEnabled)
+    {
+        foreach (var placeholder in placeholders)
+        {
+            placeholder.GetComponent<Collider>().enabled = isEnabled;
+        }
     }
 }
