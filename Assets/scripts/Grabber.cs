@@ -1,5 +1,9 @@
 using System;
+using System.Numerics;
+using DG.Tweening;
 using UnityEngine;
+using Quaternion = UnityEngine.Quaternion;
+using Vector3 = UnityEngine.Vector3;
 
 public class Grabber : MonoBehaviour {
 
@@ -33,31 +37,34 @@ public class Grabber : MonoBehaviour {
             Vector3 worldPosition = Camera.main.ScreenToWorldPoint(position);
             selectedObject.transform.position = new Vector3(worldPosition.x, worldPosition.y, worldPosition.z);
 
-            if (Input.GetButton("D")) {
-                selectedObject.transform.rotation = Quaternion.Lerp(selectedObject.transform.rotation, Quaternion.Euler(
-                    selectedObject.transform.rotation.eulerAngles.x,
-                    selectedObject.transform.rotation.eulerAngles.y + 90f,
-                    selectedObject.transform.rotation.eulerAngles.z), Time.deltaTime * 1f);
+
+            Vector3 localUp = transform.up;
+            Vector3 worldUp = Vector3.up;
+            float dotProduct = Vector3.Dot(localUp, worldUp);
+
+            if (Input.GetButtonDown("D")) {
+                RotateCube(new Vector3(0,1f,0) * 90f);
             }
-            if (Input.GetButton("A")) {
-                selectedObject.transform.rotation = Quaternion.Lerp(selectedObject.transform.rotation, Quaternion.Euler(
-                        selectedObject.transform.rotation.eulerAngles.x,
-                        selectedObject.transform.rotation.eulerAngles.y - 90f,
-                        selectedObject.transform.rotation.eulerAngles.z), Time.deltaTime * 1f);
+            if (Input.GetButtonDown("A"))
+            {
+                RotateCube(new Vector3(0,1f,0) * -90f);
             }
-            if (Input.GetButton("W")) {
-                selectedObject.transform.rotation = Quaternion.Lerp(selectedObject.transform.rotation, Quaternion.Euler(
-                        selectedObject.transform.rotation.eulerAngles.x + 90f,
-                        selectedObject.transform.rotation.eulerAngles.y,
-                        selectedObject.transform.rotation.eulerAngles.z), Time.deltaTime * 1f);
+            if (Input.GetButtonDown("W")) {
+                if(Mathf.Approximately(dotProduct,1.0f)||Mathf.Approximately(dotProduct,-1.0f))
+                    RotateCube(new Vector3(1f,0,0) * 90f);
+                else 
+                    RotateCube(new Vector3(0f,0,1f) * 90f);
             }
-            if (Input.GetButton("S")) {
-                selectedObject.transform.rotation = Quaternion.Lerp(selectedObject.transform.rotation, Quaternion.Euler(
-                        selectedObject.transform.rotation.eulerAngles.x -90f,
-                        selectedObject.transform.rotation.eulerAngles.y,
-                        selectedObject.transform.rotation.eulerAngles.z), Time.deltaTime * 1f);
+            if (Input.GetButtonDown("S")) {
+                RotateCube(new Vector3(1f,0,0) * -90f);
             }
         }
+    }
+
+
+    private void RotateCube(Vector3 rotationAxis)
+    {
+        selectedObject.transform.DORotate(selectedObject.transform.eulerAngles + rotationAxis, 1f, RotateMode.Fast);
     }
 
     private RaycastHit CastRay() {
