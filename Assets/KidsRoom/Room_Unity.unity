@@ -1624,7 +1624,7 @@ GameObject:
   - component: {fileID: 301610229}
   - component: {fileID: 301610228}
   m_Layer: 0
-  m_Name: Cube2
+  m_Name: Cube3
   m_TagString: drag
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -4279,7 +4279,7 @@ GameObject:
   - component: {fileID: 733583481}
   - component: {fileID: 733583480}
   m_Layer: 0
-  m_Name: Cube3
+  m_Name: Cube1
   m_TagString: drag
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -9900,11 +9900,6 @@ MonoBehaviour:
   - {fileID: 2068891661}
   - {fileID: 382332904}
   - {fileID: 328284657}
-  cubes:
-  - {fileID: 2125220359}
-  - {fileID: 301610228}
-  - {fileID: 733583480}
-  - {fileID: 221917784}
   selectedCube: {fileID: 0}
 --- !u!4 &1889885434
 Transform:
@@ -11328,7 +11323,7 @@ GameObject:
   - component: {fileID: 2125220355}
   - component: {fileID: 2125220359}
   m_Layer: 0
-  m_Name: Cube1
+  m_Name: Cube2
   m_TagString: drag
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -11441,9 +11436,9 @@ SceneRoots:
   m_Roots:
   - {fileID: 682866190}
   - {fileID: 953087114}
+  - {fileID: 733583484}
   - {fileID: 2125220358}
   - {fileID: 301610232}
-  - {fileID: 733583484}
   - {fileID: 221917788}
   - {fileID: 572035291}
   - {fileID: 382332903}

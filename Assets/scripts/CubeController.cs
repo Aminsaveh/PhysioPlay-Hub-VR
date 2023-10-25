@@ -10,11 +10,12 @@ public class CubeController : MonoBehaviour
     private float rotationSpeed = 30; // Adjust the rotation speed as needed
     private bool isRotating = false;
     private bool isMoving = false;
-    public List<Placeholder> placeholders;
+    
+    [SerializeField] private List<Placeholder> placeholders;
 
-    public List<Cube> cubes;
+    //[SerializeField] private List<Cube> cubes;
 
-    public Cube selectedCube;
+    [SerializeField] private Cube selectedCube;
 
 
     void SnapToPlaceholder()
