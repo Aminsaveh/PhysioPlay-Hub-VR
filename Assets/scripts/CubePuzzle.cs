@@ -4,13 +4,26 @@ using UnityEngine;
 
 public class CubePuzzle : MonoBehaviour
 {
-    public GameObject cubePrefab;  // Drag your Cube Prefab here in the Inspector
-    public float spacing = 1.1f;   // Define spacing between cubes
+    [SerializeField] private GameObject cubePrefab;  // Drag your Cube Prefab here in the Inspector
+    [SerializeField] private float spacing = 1.1f;   // Define spacing between cubes
+    
+    private enum PuzzleSize
+    {
+        Small = 4,
+        Medium = 9,
+        Large = 16
+    }
+    
+    [SerializeField] private PuzzleSize puzzleSize;  // Select this in the Editor
 
     void Start()
     {
         // Example usage:
-        GenerateCubes(9);  // Generates a 3x3 grid of cubes
+        GenerateCubes((int)puzzleSize);  // Generates the grid based on the selected puzzle size
+        
+        // Deactivate the cube prefab after instantiation
+        cubePrefab.SetActive(false);
+        cubePrefab.transform.position = new Vector3(1000, 1000, 1000);
     }
 
     public void GenerateCubes(int level)
