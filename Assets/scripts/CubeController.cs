@@ -5,6 +5,14 @@ using UnityEngine;
 
 public class CubeController : MonoBehaviour
 {
+    
+    private enum PuzzleSize
+    {
+        Small = 4,
+        Medium = 9,
+        Large = 16
+    }
+    
     private int rotationState = 0; // 0 represents the default front view
     private float rotationSpeed = 30; // Adjust the rotation speed as needed
     private bool isRotating = false;
@@ -16,11 +24,17 @@ public class CubeController : MonoBehaviour
 
     [SerializeField] private Cube selectedCube;
 
-    public int imageIndex = 1;
+    [SerializeField] private int level = 1;
     
+    [SerializeField] private PuzzleSize puzzleSize; 
     
     private Vector3 frontRotation = new Vector3(0,0,0);
     private Vector3 topRotation = new Vector3(-90,0,90);
+    private Vector3 backRotation = new Vector3(0,-90,0);
+    private Vector3 bottomRotation = new Vector3(-90,0,0);
+    private Vector3 rightRotation = new Vector3(0,90,0);
+    private Vector3 leftRotation = new Vector3(0,-90,-180);
+
 
 
 
@@ -250,7 +264,7 @@ public class CubeController : MonoBehaviour
         if(placeholders.Find(it => it.cube == null) != null) return;
         foreach (var placeholder in placeholders)
         {
-            if (imageIndex == 1)
+            if (level == 1)
             {
                 Debug.Log("ImageIndex = 1");
                 if(placeholder.cube.cubeFace != CubeFace.Front) return;
@@ -261,11 +275,40 @@ public class CubeController : MonoBehaviour
             
             }
 
-            else if (imageIndex == 2)
+            else if (level == 2)
             {
                 Debug.Log("ImageIndex = 2");
                 if(placeholder.cube.cubeFace != CubeFace.Top) return;
                 if(placeholder.cube.transform.rotation.eulerAngles.Equals(topRotation)) return;
+                if(placeholder.cube.index != placeholder.index) return;
+            }
+            
+            else if (level == 3)
+            {
+                Debug.Log("ImageIndex = 3");
+                if(placeholder.cube.cubeFace != CubeFace.Back) return;
+                if(placeholder.cube.transform.rotation.eulerAngles.Equals(backRotation)) return;
+                if(placeholder.cube.index != placeholder.index) return;
+            }
+            else if (level == 4)
+            {
+                Debug.Log("ImageIndex = 4");
+                if(placeholder.cube.cubeFace != CubeFace.Right) return;
+                if(placeholder.cube.transform.rotation.eulerAngles.Equals(rightRotation)) return;
+                if(placeholder.cube.index != placeholder.index) return;
+            }
+            else if (level == 5)
+            {
+                Debug.Log("ImageIndex = 5");
+                if(placeholder.cube.cubeFace != CubeFace.Left) return;
+                if(placeholder.cube.transform.rotation.eulerAngles.Equals(leftRotation)) return;
+                if(placeholder.cube.index != placeholder.index) return;
+            }
+            else if (level == 6)
+            {
+                Debug.Log("ImageIndex = 6");
+                if(placeholder.cube.cubeFace != CubeFace.Bottom) return;
+                if(placeholder.cube.transform.rotation.eulerAngles.Equals(bottomRotation)) return;
                 if(placeholder.cube.index != placeholder.index) return;
             }
             else
@@ -275,7 +318,7 @@ public class CubeController : MonoBehaviour
             }
         }
 
-        imageIndex++;
+        level++;
         Debug.Log("Win!");
     }
     
