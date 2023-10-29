@@ -21,16 +21,17 @@
             <e p="prop" t="Include" />
           </e>
           <e p="Room_Unity" t="Include" />
-        </e>
-        <e p="Modern School Gym" t="Include">
-          <e p="Materials" t="Include" />
-          <e p="Meshes" t="Include" />
-          <e p="Prefabs" t="Include" />
-          <e p="Scenes" t="Include">
-            <e p="DemoScene" t="Include" />
+          <e p="School" t="Include">
+            <e p="Materials" t="Include" />
+            <e p="Meshes" t="Include" />
+            <e p="Prefabs" t="Include" />
+            <e p="Scenes" t="Include">
+              <e p="DemoScene" t="Include" />
+            </e>
+            <e p="Textures" t="Include" />
           </e>
-          <e p="Textures" t="Include" />
         </e>
+        <e p="Materials" t="Include" />
         <e p="Plugins" t="Include">
           <e p="Demigiant" t="Include">
             <e p="DOTween" t="Include">
@@ -54,21 +55,26 @@
             <e p="JetBrains" t="Include" />
           </e>
         </e>
+        <e p="Prefabs" t="Include" />
+        <e p="Render Pipeline Assets" t="Include" />
         <e p="Resources" t="Include" />
         <e p="scripts" t="Include">
           <e p="Cube.cs" t="Include" />
           <e p="CubeController.cs" t="Include" />
+          <e p="CubePuzzle.cs" t="Include" />
+          <e p="GenerateImage.cs" t="Include" />
           <e p="Grabber.cs" t="Include" />
           <e p="Placeholder.cs" t="Include" />
-          <e p="PuzzleImage.cs" t="Include" />
         </e>
-        <e p="XR" t="Include">
-          <e p="Loaders" t="Include" />
-          <e p="Settings" t="Include" />
-        </e>
-        <e p="XRI" t="Include">
-          <e p="Settings" t="Include">
-            <e p="Resources" t="Include" />
+        <e p="VR" t="Include">
+          <e p="XR" t="Include">
+            <e p="Loaders" t="Include" />
+            <e p="Settings" t="Include" />
+          </e>
+          <e p="XRI" t="Include">
+            <e p="Settings" t="Include">
+              <e p="Resources" t="Include" />
+            </e>
           </e>
         </e>
       </e>

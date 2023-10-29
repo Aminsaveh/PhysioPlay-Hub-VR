@@ -20,6 +20,7 @@ public class Cube : MonoBehaviour
     public CubeFace cubeFace = CubeFace.Front;
     public Vector3 initialPosition;
     public Quaternion initialRotation;
+    public int index;
 
     private void Start()
     {

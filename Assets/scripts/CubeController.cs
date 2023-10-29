@@ -1,5 +1,4 @@
-using System;
-using System.Collections;
+
 using System.Collections.Generic;
 using DG.Tweening;
 using UnityEngine;
@@ -16,6 +15,13 @@ public class CubeController : MonoBehaviour
     //[SerializeField] private List<Cube> cubes;
 
     [SerializeField] private Cube selectedCube;
+
+    public int imageIndex = 1;
+    
+    
+    private Vector3 frontRotation = new Vector3(0,0,0);
+    private Vector3 topRotation = new Vector3(-90,0,90);
+
 
 
     void SnapToPlaceholder()
@@ -57,6 +63,9 @@ public class CubeController : MonoBehaviour
             }
             selectedCube.transform.position = selectedCube.initialPosition;
         }
+
+        Debug.Log("Here");
+        CheckIsGameFinished();
     }
 
     private void Start()
@@ -233,4 +242,41 @@ public class CubeController : MonoBehaviour
             placeholder.GetComponent<Collider>().enabled = isEnabled;
         }
     }
+
+
+
+    private void CheckIsGameFinished()
+    {
+        if(placeholders.Find(it => it.cube == null) != null) return;
+        foreach (var placeholder in placeholders)
+        {
+            if (imageIndex == 1)
+            {
+                Debug.Log("ImageIndex = 1");
+                if(placeholder.cube.cubeFace != CubeFace.Front) return;
+                Debug.Log(placeholder.cube.transform.rotation.eulerAngles.Equals(frontRotation));
+                if(!placeholder.cube.transform.rotation.eulerAngles.Equals(frontRotation)) return;
+                Debug.Log(placeholder.cube.index + " | " + placeholder.index);
+                if(placeholder.cube.index != placeholder.index) return;
+            
+            }
+
+            else if (imageIndex == 2)
+            {
+                Debug.Log("ImageIndex = 2");
+                if(placeholder.cube.cubeFace != CubeFace.Top) return;
+                if(placeholder.cube.transform.rotation.eulerAngles.Equals(topRotation)) return;
+                if(placeholder.cube.index != placeholder.index) return;
+            }
+            else
+            {
+                Debug.Log("else");
+                return;
+            }
+        }
+
+        imageIndex++;
+        Debug.Log("Win!");
+    }
+    
 }

@@ -9,5 +9,6 @@ public class Placeholder : MonoBehaviour
 {
     
     public Cube cube = null;
-    
+    public int index;
+
 }

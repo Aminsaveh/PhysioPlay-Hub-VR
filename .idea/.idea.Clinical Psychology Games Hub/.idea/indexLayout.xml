@@ -40,6 +40,10 @@
       <Path>Library/PackageCache/com.unity.modules.vr@1.0.0</Path>
       <Path>Library/PackageCache/com.unity.modules.wind@1.0.0</Path>
       <Path>Library/PackageCache/com.unity.modules.xr@1.0.0</Path>
+      <Path>Library/PackageCache/com.unity.render-pipelines.core@14.0.8</Path>
+      <Path>Library/PackageCache/com.unity.render-pipelines.universal@14.0.8</Path>
+      <Path>Library/PackageCache/com.unity.searcher@4.9.2</Path>
+      <Path>Library/PackageCache/com.unity.shadergraph@14.0.8</Path>
       <Path>Library/PackageCache/com.unity.textmeshpro@3.0.6</Path>
       <Path>Library/PackageCache/com.unity.timeline@1.7.5</Path>
       <Path>Library/PackageCache/com.unity.ugui@1.0.0</Path>
@@ -58,6 +62,7 @@
       <Path>.idea</Path>
       <Path>Library</Path>
       <Path>Logs</Path>
+      <Path>Temp</Path>
       <Path>UserSettings</Path>
       <Path>obj</Path>
     </explicitExcludes>
