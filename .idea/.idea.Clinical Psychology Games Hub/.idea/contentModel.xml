@@ -64,6 +64,7 @@
           <e p="CubePuzzle.cs" t="Include" />
           <e p="GenerateImage.cs" t="Include" />
           <e p="Grabber.cs" t="Include" />
+          <e p="Map.cs" t="Include" />
           <e p="Placeholder.cs" t="Include" />
         </e>
         <e p="VR" t="Include">

@@ -22,12 +22,7 @@ public class GenerateImage : MonoBehaviour
         cubePrefab.gameObject.SetActive(false);
 
     }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
+    
     
     public void GenerateCubes(int level)
     {

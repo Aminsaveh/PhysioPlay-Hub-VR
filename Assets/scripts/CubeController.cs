@@ -1,6 +1,7 @@
 
 using System.Collections.Generic;
 using DG.Tweening;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class CubeController : MonoBehaviour
@@ -17,12 +18,21 @@ public class CubeController : MonoBehaviour
     private float rotationSpeed = 30; // Adjust the rotation speed as needed
     private bool isRotating = false;
     private bool isMoving = false;
+
+    public Map map2x2;
+    public Map map3x3;
+        
+    public Cube cubePrefab; 
     
-    [SerializeField] private List<Placeholder> placeholders;
+    
+    
+    
 
     //[SerializeField] private List<Cube> cubes;
 
     [SerializeField] private Cube selectedCube;
+    
+    [SerializeField] private Map selectedMap;
 
     [SerializeField] private int level = 1;
     
@@ -40,51 +50,61 @@ public class CubeController : MonoBehaviour
 
     void SnapToPlaceholder()
     {
-        Placeholder bestFit = null;
-        float maxOverlap = 0;
-        foreach (var placeholder in placeholders)
+        if (selectedCube != null)
         {
-            Collider cubeCollider = selectedCube.GetComponent<Collider>();
-            Collider placeholderCollider = placeholder.GetComponent<Collider>();
-            if (cubeCollider.bounds.Intersects(placeholderCollider.bounds))
+            Cube cube = selectedCube;
+            Placeholder bestFit = null;
+            float maxOverlap = 0;
+            foreach (var placeholder in selectedMap.placeholders)
             {
-                float overlapVolume = GetOverlapVolume(cubeCollider.bounds, placeholderCollider.bounds);
-                if (maxOverlap < overlapVolume)
+                Collider cubeCollider = cube.collider;
+                Collider placeholderCollider = placeholder.collider;
+                if (cubeCollider.bounds.Intersects(placeholderCollider.bounds))
                 {
-                    maxOverlap = overlapVolume;
-                    bestFit = placeholder;
+                    float overlapVolume = GetOverlapVolume(cubeCollider.bounds, placeholderCollider.bounds);
+                    if (maxOverlap < overlapVolume)
+                    {
+                        maxOverlap = overlapVolume;
+                        bestFit = placeholder;
+                    }
                 }
             }
-        }
-        //float distanceToPlaceholder = Vector3.Distance(selectedCube.transform.position, placeholder.transform.position);
-        if (!Mathf.Approximately(maxOverlap,0) && bestFit != null && (bestFit.cube == null || bestFit.cube == selectedCube))
-        {
-            isMoving = true;
-            selectedCube.transform.DOMove(bestFit.transform.position,2f) .OnComplete(() => isMoving = false);
-            Placeholder pastPlaceholder = placeholders.Find(x => x.cube == selectedCube);
-            if (pastPlaceholder != null)
+            
+            if (!Mathf.Approximately(maxOverlap, 0) && bestFit != null &&
+                (bestFit.cube == null || bestFit.cube == cube))
             {
-                pastPlaceholder.cube = null;
-            }
-            bestFit.cube = selectedCube;
-        }
-        else
-        {
-            Placeholder pastPlaceholder = placeholders.Find(x => x.cube == selectedCube);
-            if (pastPlaceholder != null)
-            {
-                pastPlaceholder.cube = null;
-            }
-            selectedCube.transform.position = selectedCube.initialPosition;
-        }
+                isMoving = true;
+                cube.transform.DOMove(bestFit.transform.position, 2f).OnComplete(() => isMoving = false);
+                Placeholder pastPlaceholder = selectedMap.placeholders.Find(x => x.cube == cube);
+                if (pastPlaceholder != null)
+                {
+                    pastPlaceholder.cube = null;
+                }
 
-        Debug.Log("Here");
-        CheckIsGameFinished();
+                bestFit.cube = cube;
+            }
+            else
+            {
+                Placeholder pastPlaceholder = selectedMap.placeholders.Find(x => x.cube == cube);
+                if (pastPlaceholder != null)
+                {
+                    pastPlaceholder.cube = null;
+                }
+
+                cube.transform.position = cube.initialPosition;
+            }
+            
+            CheckIsGameFinished();
+        }
     }
 
     private void Start()
     {
+        SetSelectedMap();
         TogglePlaceholderColliders(false);
+        GenerateCubes((int)puzzleSize); 
+        cubePrefab.gameObject.SetActive(false);
+        
     }
 
     // Update is called once per frame
@@ -169,13 +189,16 @@ public class CubeController : MonoBehaviour
     
      void SetRotationRound()
     {
-        isRotating = true;
-        Vector3 rotation = selectedCube.transform.eulerAngles;
-        selectedCube.transform.DORotate(new Vector3(Mathf.Round(rotation.x/90.0f) * 90.0f,
-            Mathf.Round(rotation.y/90.0f) * 90.0f,
-            Mathf.Round(rotation.z/90.0f) * 90.0f),
-            2f) .OnComplete(() => isRotating = false);
-        // When the rotation is complete, set isRotating to false;
+        if (selectedCube != null)
+        {
+            Cube cube = selectedCube;
+            isRotating = true;
+            Vector3 rotation = cube.transform.eulerAngles;
+            cube.transform.DORotate(new Vector3(Mathf.Round(rotation.x/90.0f) * 90.0f,
+                    Mathf.Round(rotation.y/90.0f) * 90.0f,
+                    Mathf.Round(rotation.z/90.0f) * 90.0f),
+                2f) .OnComplete(() => isRotating = false);
+        }
     }
 
     void CalculateFacedEdge()
@@ -251,9 +274,9 @@ public class CubeController : MonoBehaviour
 
     private void TogglePlaceholderColliders(bool isEnabled)
     {
-        foreach (var placeholder in placeholders)
+        foreach (var placeholder in selectedMap.placeholders)
         {
-            placeholder.GetComponent<Collider>().enabled = isEnabled;
+            placeholder.collider.enabled = isEnabled;
         }
     }
 
@@ -261,8 +284,8 @@ public class CubeController : MonoBehaviour
 
     private void CheckIsGameFinished()
     {
-        if(placeholders.Find(it => it.cube == null) != null) return;
-        foreach (var placeholder in placeholders)
+        if(selectedMap.placeholders.Find(it => it.cube == null) != null) return;
+        foreach (var placeholder in selectedMap.placeholders)
         {
             if (level == 1)
             {
@@ -320,6 +343,55 @@ public class CubeController : MonoBehaviour
 
         level++;
         Debug.Log("Win!");
+    }
+
+
+    private void SetSelectedMap()
+    {
+        
+        switch (puzzleSize)
+        {
+            case PuzzleSize.Small : selectedMap = map2x2; break;
+            case PuzzleSize.Medium : selectedMap = map3x3; break;
+        }
+        Debug.Log(puzzleSize);
+        selectedMap.gameObject.SetActive(true);
+    }
+    
+    private void GenerateCubes(int level)
+    {
+        int sideLength = Mathf.RoundToInt(Mathf.Sqrt(level));  // For 4 it's 2x2, for 9 it's 3x3, for 16 it's 4x4
+        int cubeNumber = 1;
+
+        for (int z = 0; z < sideLength; z++)
+        {
+            for (int x = 0; x < sideLength; x++)
+            {
+                Cube cube = Instantiate(cubePrefab, selectedMap.cubePlaceholders[cubeNumber-1].transform.position, Quaternion.identity);
+
+                cube.index = cubeNumber;
+                cube.name = cubeNumber.ToString();  // Naming the cube
+                cubeNumber++;
+
+                AdjustUVs(cube.gameObject, x, z, sideLength);
+            }
+        }
+    }
+
+    private void AdjustUVs(GameObject cube, int x, int z, int sideLength)
+    {
+        foreach (MeshFilter meshFilter in cube.GetComponentsInChildren<MeshFilter>())
+        {
+            Mesh mesh = meshFilter.mesh;
+            Vector2[] uvs = mesh.uv;
+            for (int i = 0; i < uvs.Length; i++)
+            {
+                uvs[i].x = (uvs[i].x / sideLength) + (float)x / sideLength;
+                uvs[i].y = (uvs[i].y / sideLength) + (float)z / sideLength;
+            }
+
+            mesh.uv = uvs;
+        }
     }
     
 }
