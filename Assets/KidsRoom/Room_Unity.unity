@@ -12294,6 +12294,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   map2x2: {fileID: 1796207808}
   map3x3: {fileID: 1345649627}
+  map4x4: {fileID: 0}
   cubePrefab: {fileID: 2062720574}
   images:
   - {fileID: 2100000, guid: b5c5a28f5a4c5bd49a34277dafd98998, type: 2}
@@ -12305,7 +12306,7 @@ MonoBehaviour:
   selectedCube: {fileID: 0}
   selectedMap: {fileID: 0}
   level: 0
-  puzzleSize: 4
+  puzzleSize: 9
   puzzleOriginalImage: {fileID: 1406463357}
 --- !u!224 &1889885434
 RectTransform:

@@ -22,6 +22,7 @@ public class CubeController : MonoBehaviour
 
     public Map map2x2;
     public Map map3x3;
+    public Map map4x4;
         
     public Cube cubePrefab;
 
@@ -374,6 +375,7 @@ public class CubeController : MonoBehaviour
         {
             case PuzzleSize.Small : selectedMap = map2x2; break;
             case PuzzleSize.Medium : selectedMap = map3x3; break;
+            case PuzzleSize.Large : selectedMap = map4x4; break;
         }
         Debug.Log(puzzleSize);
         selectedMap.gameObject.SetActive(true);
