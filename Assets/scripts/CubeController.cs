@@ -22,7 +22,10 @@ public class CubeController : MonoBehaviour
     public Map map2x2;
     public Map map3x3;
         
-    public Cube cubePrefab; 
+    public Cube cubePrefab;
+
+
+    public Material[] images;
     
     
     
@@ -37,6 +40,8 @@ public class CubeController : MonoBehaviour
     [SerializeField] private int level = 1;
     
     [SerializeField] private PuzzleSize puzzleSize; 
+    
+    [SerializeField] private MeshRenderer puzzleOriginalImage; 
     
     private Vector3 frontRotation = new Vector3(0,0,0);
     private Vector3 topRotation = new Vector3(-90,0,90);
@@ -104,7 +109,8 @@ public class CubeController : MonoBehaviour
         TogglePlaceholderColliders(false);
         GenerateCubes((int)puzzleSize); 
         cubePrefab.gameObject.SetActive(false);
-        
+        SetNextLevel();
+
     }
 
     // Update is called once per frame
@@ -341,7 +347,7 @@ public class CubeController : MonoBehaviour
             }
         }
 
-        level++;
+        SetNextLevel();
         Debug.Log("Win!");
     }
 
@@ -392,6 +398,13 @@ public class CubeController : MonoBehaviour
 
             mesh.uv = uvs;
         }
+    }
+
+
+    private void SetNextLevel()
+    {
+        level++;
+        puzzleOriginalImage.material = images[level];
     }
     
 }
