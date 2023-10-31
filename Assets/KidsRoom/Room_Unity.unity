@@ -8957,7 +8957,7 @@ GameObject:
   - component: {fileID: 1406463357}
   - component: {fileID: 1406463356}
   m_Layer: 0
-  m_Name: Quad
+  m_Name: CorrectImage
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -11498,10 +11498,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   placeholders:
-  - {fileID: 572035292}
   - {fileID: 382332904}
-  - {fileID: 2068891661}
   - {fileID: 328284657}
+  - {fileID: 572035292}
+  - {fileID: 2068891661}
   cubePlaceholders:
   - {fileID: 733583479}
   - {fileID: 2125220354}
@@ -12295,10 +12295,18 @@ MonoBehaviour:
   map2x2: {fileID: 1796207808}
   map3x3: {fileID: 1345649627}
   cubePrefab: {fileID: 2062720574}
+  images:
+  - {fileID: 2100000, guid: b5c5a28f5a4c5bd49a34277dafd98998, type: 2}
+  - {fileID: 2100000, guid: 2dacb6cdd34bc6e4dbf44267233521bb, type: 2}
+  - {fileID: 2100000, guid: 0dc8469af32568e47a70b9553f73883a, type: 2}
+  - {fileID: 2100000, guid: 11f0bbbbbad1cad408f05286e94acd6a, type: 2}
+  - {fileID: 2100000, guid: 8efec5b0884d55f47bf4f874e5403592, type: 2}
+  - {fileID: 2100000, guid: 8cf320bfd21c7cb45be18af408ddcd79, type: 2}
   selectedCube: {fileID: 0}
   selectedMap: {fileID: 0}
-  level: 1
-  puzzleSize: 9
+  level: 0
+  puzzleSize: 4
+  puzzleOriginalImage: {fileID: 1406463357}
 --- !u!224 &1889885434
 RectTransform:
   m_ObjectHideFlags: 0
