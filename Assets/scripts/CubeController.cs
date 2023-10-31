@@ -42,14 +42,14 @@ public class CubeController : MonoBehaviour
     
     [SerializeField] private PuzzleSize puzzleSize; 
     
-    [SerializeField] private MeshRenderer puzzleOriginalImage; 
-    
-    private Vector3 frontRotation = new Vector3(0,0,0);
-    private Vector3 topRotation = new Vector3(0,0,90);
-    private Vector3 backRotation = new Vector3(0,-180,0);
-    private Vector3 bottomRotation = new Vector3(0,0,-90);
-    private Vector3 rightRotation = new Vector3(0,90,0);
-    private Vector3 leftRotation = new Vector3(0,-90,0);
+    [SerializeField] private MeshRenderer puzzleOriginalImage;
+
+    private Quaternion frontRotation = Quaternion.Euler(0, 0, 0);
+    private Quaternion topRotation = Quaternion.Euler(0,0,90);
+    private Quaternion backRotation = Quaternion.Euler(0,-180,0);
+    private Quaternion bottomRotation =Quaternion.Euler(0,0,-90);
+    private Quaternion rightRotation = Quaternion.Euler(0,90,0);
+    private Quaternion leftRotation = Quaternion.Euler(0,-90,0);
 
 
 
@@ -307,14 +307,13 @@ public class CubeController : MonoBehaviour
             Debug.Log("|||||");
             Debug.Log(placeholder.cube.cubeFace );
             Debug.Log(placeholder.cube.transform.rotation.eulerAngles + " | " + topRotation);
-            Debug.Log(placeholder.cube.transform.rotation.eulerAngles.Equals(topRotation));
             Debug.Log(placeholder.cube.index + " | " + placeholder.index);
             Debug.Log("|||||");
             if (level == 1)
             {
                 if(placeholder.cube.cubeFace != CubeFace.Front) return;
              
-                if(!placeholder.cube.transform.rotation.eulerAngles.Equals(frontRotation)) return;
+                if(Quaternion.Angle(placeholder.cube.transform.rotation,frontRotation)>=1f) return;
           
                 if(placeholder.cube.index != placeholder.index) return;
             
@@ -323,7 +322,7 @@ public class CubeController : MonoBehaviour
             else if (level == 2)
             {
                 if(placeholder.cube.cubeFace != CubeFace.Top) return;
-                if(!placeholder.cube.transform.rotation.eulerAngles.Equals(topRotation)) return;
+                if(Quaternion.Angle(placeholder.cube.transform.rotation,topRotation)>=1f) return;
                 if(placeholder.cube.index != placeholder.index) return;
             }
             
@@ -331,28 +330,28 @@ public class CubeController : MonoBehaviour
             {
                 Debug.Log("ImageIndex = 3");
                 if(placeholder.cube.cubeFace != CubeFace.Back) return;
-                if(!placeholder.cube.transform.rotation.eulerAngles.Equals(backRotation)) return;
+                if(Quaternion.Angle(placeholder.cube.transform.rotation,backRotation)>=1f) return;
                 if(placeholder.cube.index != placeholder.index) return;
             }
             else if (level == 4)
             {
                 Debug.Log("ImageIndex = 4");
                 if(placeholder.cube.cubeFace != CubeFace.Right) return;
-                if(!placeholder.cube.transform.rotation.eulerAngles.Equals(rightRotation)) return;
+                if(Quaternion.Angle(placeholder.cube.transform.rotation,rightRotation)>=1f) return;
                 if(placeholder.cube.index != placeholder.index) return;
             }
             else if (level == 5)
             {
                 Debug.Log("ImageIndex = 5");
                 if(placeholder.cube.cubeFace != CubeFace.Left) return;
-                if(!placeholder.cube.transform.rotation.eulerAngles.Equals(leftRotation)) return;
+                if(Quaternion.Angle(placeholder.cube.transform.rotation,leftRotation)>=1f) return;
                 if(placeholder.cube.index != placeholder.index) return;
             }
             else if (level == 6)
             {
                 Debug.Log("ImageIndex = 6");
                 if(placeholder.cube.cubeFace != CubeFace.Bottom) return;
-                if(!placeholder.cube.transform.rotation.eulerAngles.Equals(bottomRotation)) return;
+                if(Quaternion.Angle(placeholder.cube.transform.rotation,bottomRotation)>=1f) return;
                 if(placeholder.cube.index != placeholder.index) return;
             }
             else
