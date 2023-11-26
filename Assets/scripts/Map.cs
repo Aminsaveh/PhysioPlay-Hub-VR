@@ -7,6 +7,9 @@ public class Map : MonoBehaviour
 {
 
     public List<Placeholder> placeholders;
+    
+    
+    
 
     public GameObject[] cubePlaceholders;
     

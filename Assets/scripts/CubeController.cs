@@ -81,7 +81,7 @@ public class CubeController : MonoBehaviour
                 (bestFit.cube == null || bestFit.cube == cube))
             {
                 isMoving = true;
-                cube.transform.DOMove(bestFit.transform.position, 2f).OnComplete(() =>
+                cube.transform.DOMove(bestFit.transform.position, 1f).OnComplete(() =>
                     {
                         isMoving = false;
                     CheckIsGameFinished();
@@ -111,6 +111,7 @@ public class CubeController : MonoBehaviour
 
     private void Start()
     {
+        TurnAllMapsOff();
         SetSelectedMap();
         TogglePlaceholderColliders(false);
         GenerateCubes((int)puzzleSize); 
@@ -209,11 +210,10 @@ public class CubeController : MonoBehaviour
             cube.transform.DORotate(new Vector3(Mathf.Round(rotation.x/90.0f) * 90.0f,
                     Mathf.Round(rotation.y/90.0f) * 90.0f,
                     Mathf.Round(rotation.z/90.0f) * 90.0f),
-                2f) .OnComplete(() =>
+                1f) .OnComplete(() =>
             {
                 isRotating = false;
                 CalculateFacedEdge();
-                CheckIsGameFinished();
             });
         }
     }
@@ -302,14 +302,8 @@ public class CubeController : MonoBehaviour
     private void CheckIsGameFinished()
     {
         if(selectedMap.placeholders.Find(it => it.cube == null) != null) return;
-        Debug.Log("-----");
         foreach (var placeholder in selectedMap.placeholders)
         {
-            Debug.Log("|||||");
-            Debug.Log(placeholder.cube.cubeFace );
-            Debug.Log(placeholder.cube.transform.rotation.eulerAngles + " | " + topRotation);
-            Debug.Log(placeholder.cube.index + " | " + placeholder.index);
-            Debug.Log("|||||");
             if (level == 1)
             {
                 if(placeholder.cube.cubeFace != CubeFace.Front) return;
@@ -418,7 +412,7 @@ public class CubeController : MonoBehaviour
     }
 
 
-    private  async void SetNextLevel()
+    private async void SetNextLevel()
     {
         await Task.Delay(3000);
         level++;
@@ -438,6 +432,10 @@ public class CubeController : MonoBehaviour
         
     }
 
-
- 
+    private void TurnAllMapsOff()
+    {
+        map2x2.gameObject.SetActive(false);
+        map3x3.gameObject.SetActive(false);
+        map4x4.gameObject.SetActive(false);
+    }
 }
