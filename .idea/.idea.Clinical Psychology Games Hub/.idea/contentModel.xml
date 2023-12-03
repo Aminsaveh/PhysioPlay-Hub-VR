@@ -31,7 +31,11 @@
             <e p="Textures" t="Include" />
           </e>
         </e>
-        <e p="Materials" t="Include" />
+        <e p="Materials" t="Include">
+          <e p="Tests" t="Include">
+            <e p="Tests.asmdef" t="Include" />
+          </e>
+        </e>
         <e p="Plugins" t="Include">
           <e p="Demigiant" t="Include">
             <e p="DOTween" t="Include">
@@ -78,11 +82,15 @@
             </e>
           </e>
         </e>
+        <e p="XR" t="Include">
+          <e p="Settings" t="Include" />
+        </e>
       </e>
       <e p="Clinical Psychology Games Hub.sln" t="IncludeFlat" />
       <e p="obj" t="ExcludeRecursive" />
       <e p="Packages" t="ExcludeRecursive" />
       <e p="Temp\Bin" t="ExcludeRecursive" />
+      <e p="Tests.csproj" t="IncludeRecursive" />
     </e>
   </component>
 </project>
