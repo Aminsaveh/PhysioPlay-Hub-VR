@@ -9,9 +9,9 @@ public class CartMovement : MonoBehaviour
     // The array of checkpoints to move and rotate towards
     [SerializeField] private Transform[] checkpoints;
 
-    private bool _startGame;
+    private bool startGame;
 
-    public bool Target => _startGame;
+    public bool Target => startGame;
 
     // The speed of movement and rotation
     private float moveSpeed = 0.2f;
@@ -60,7 +60,7 @@ public class CartMovement : MonoBehaviour
         }
         else
         {
-            _startGame = true;
+            startGame = true;
         }
         
     }

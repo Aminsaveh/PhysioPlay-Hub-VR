@@ -5709,7 +5709,6 @@ GameObject:
   - component: {fileID: 845284750}
   - component: {fileID: 845284749}
   - component: {fileID: 845284748}
-  - component: {fileID: 845284752}
   m_Layer: 0
   m_Name: Quad
   m_TagString: Untagged
@@ -5804,24 +5803,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 180, z: 0}
---- !u!114 &845284752
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 845284747}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 34d6a23546baac7439892063633817c8, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  baseMaps:
-  - {fileID: 2800000, guid: 35431b184e824c34c9cf7e191e6544a3, type: 3}
-  - {fileID: 2800000, guid: 131f767cb5396824eaf13338da082918, type: 3}
-  - {fileID: 2800000, guid: feaad79cebe249541b519c4d15ff3f0f, type: 3}
-  - {fileID: 2800000, guid: 862e8fa1fd54b064ba72d591e41588be, type: 3}
-  quadRenderer: {fileID: 845284749}
 --- !u!1 &849037373
 GameObject:
   m_ObjectHideFlags: 0
@@ -7114,6 +7095,24 @@ MonoBehaviour:
   - {fileID: 1169635765}
   - {fileID: 1851400652}
   - {fileID: 1808840558}
+--- !u!114 &1022559055
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1022559045}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 34d6a23546baac7439892063633817c8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  baseMaps:
+  - {fileID: 2800000, guid: feaad79cebe249541b519c4d15ff3f0f, type: 3}
+  - {fileID: 2800000, guid: 35431b184e824c34c9cf7e191e6544a3, type: 3}
+  - {fileID: 2800000, guid: 862e8fa1fd54b064ba72d591e41588be, type: 3}
+  - {fileID: 2800000, guid: 131f767cb5396824eaf13338da082918, type: 3}
+  quadRenderer: {fileID: 845284749}
 --- !u!1001 &1023689294
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -12301,6 +12300,9 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 166594, guid: 9f4d5505010963f4abf0e1f3095b53bf, type: 3}
       insertIndex: -1
       addedObject: {fileID: 1022559052}
+    - targetCorrespondingSourceObject: {fileID: 166594, guid: 9f4d5505010963f4abf0e1f3095b53bf, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1022559055}
   m_SourcePrefab: {fileID: 100100000, guid: 9f4d5505010963f4abf0e1f3095b53bf, type: 3}
 --- !u!1001 &1690934388
 PrefabInstance:

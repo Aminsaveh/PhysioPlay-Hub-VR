@@ -4,20 +4,22 @@ using UnityEngine;
 
 public class StartGame : MonoBehaviour
 {
-    private CartMovement _cart;
 
-    [SerializeField] private Texture[] baseMaps; // Array to hold your textures
-    [SerializeField] private Renderer quadRenderer; // Reference to the Renderer of your Quad
+    [SerializeField] private Texture[] baseMaps; 
+    [SerializeField] private Renderer quadRenderer;
+
+    private CartMovement _cartMovement;
+    private bool assignpic = true;
 
     void Start()
     {
-        _cart = GetComponent<CartMovement>();
+        _cartMovement = GetComponent<CartMovement>();
     }
 
     // Update is called once per frame
     void Update()
     {
-        if (_cart.Target)
+        if (_cartMovement.Target && assignpic)
         {
             if (baseMaps.Length > 0 && quadRenderer != null)
             {
@@ -27,6 +29,8 @@ public class StartGame : MonoBehaviour
                 // Apply the texture to the Quad's material
                 quadRenderer.material.mainTexture = selectedTexture;
             }
+
+            assignpic = false;
         }
     }
 }
