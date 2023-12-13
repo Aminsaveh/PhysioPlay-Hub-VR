@@ -6,7 +6,7 @@ using UnityEngine;
 
 public class DoorOpen : MonoBehaviour
 {
-    private float rotationSpeed = 1f; // Degrees per frame
+    private float rotationSpeed = 2f; // Degrees per frame
     private float targetAngle = -90f; // Rotation target
 
     [SerializeField] private GameObject[] doors;
