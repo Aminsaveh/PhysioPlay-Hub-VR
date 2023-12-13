@@ -11,7 +11,7 @@ public class StartGame : MonoBehaviour
 
     void Start()
     {
-        
+        _cart = GetComponent<CartMovement>();
     }
 
     // Update is called once per frame
