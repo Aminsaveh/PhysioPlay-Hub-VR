@@ -11,14 +11,7 @@ public class StartGame : MonoBehaviour
 
     void Start()
     {
-        if (baseMaps.Length > 0 && quadRenderer != null)
-        {
-            // Randomly pick a texture from the array
-            Texture selectedTexture = baseMaps[Random.Range(0, baseMaps.Length)];
-            
-            // Apply the texture to the Quad's material
-            quadRenderer.material.mainTexture = selectedTexture;
-        }
+        
     }
 
     // Update is called once per frame
@@ -26,7 +19,14 @@ public class StartGame : MonoBehaviour
     {
         if (_cart.Target)
         {
-           
+            if (baseMaps.Length > 0 && quadRenderer != null)
+            {
+                // Randomly pick a texture from the array
+                Texture selectedTexture = baseMaps[Random.Range(0, baseMaps.Length)];
+            
+                // Apply the texture to the Quad's material
+                quadRenderer.material.mainTexture = selectedTexture;
+            }
         }
     }
 }
