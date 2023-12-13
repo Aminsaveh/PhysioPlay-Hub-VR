@@ -3719,7 +3719,7 @@ GameObject:
   m_Component:
   - component: {fileID: 565876403}
   m_Layer: 0
-  m_Name: EXTRA_COLLIDERS
+  m_Name: Colliders
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -7204,7 +7204,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1061214774}
   m_Layer: 0
-  m_Name: SUPERMARKET_v2
+  m_Name: SuperMarket
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
