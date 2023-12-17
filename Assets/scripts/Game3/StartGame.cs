@@ -7,14 +7,9 @@ public class StartGame : MonoBehaviour
 
     [SerializeField] private Texture[] baseMaps; 
     [SerializeField] private Renderer quadRenderer;
-
-    private CartMovement _cartMovement;
+    [SerializeField] private CartMovement _cartMovement;
+    
     private bool assignpic = true;
-
-    void Start()
-    {
-        _cartMovement = GetComponent<CartMovement>();
-    }
 
     // Update is called once per frame
     void Update()
