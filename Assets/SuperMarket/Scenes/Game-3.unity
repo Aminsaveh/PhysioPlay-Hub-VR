@@ -807,6 +807,26 @@ PrefabInstance:
       propertyPath: m_StaticEditorFlags
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 4000011271691492, guid: dc4866f0e91468c4e8dba3b96d95ceef, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: -0.64
+      objectReference: {fileID: 0}
+    - target: {fileID: 4000011271691492, guid: dc4866f0e91468c4e8dba3b96d95ceef, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: -2.35
+      objectReference: {fileID: 0}
+    - target: {fileID: 65000011156146080, guid: dc4866f0e91468c4e8dba3b96d95ceef, type: 3}
+      propertyPath: m_Center.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 65000011156146080, guid: dc4866f0e91468c4e8dba3b96d95ceef, type: 3}
+      propertyPath: m_Center.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 65000011156146080, guid: dc4866f0e91468c4e8dba3b96d95ceef, type: 3}
+      propertyPath: m_Center.z
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -11522,8 +11542,19 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   baseMaps:
-  - {fileID: 2800000, guid: feaad79cebe249541b519c4d15ff3f0f, type: 3}
-  - {fileID: 2800000, guid: 131f767cb5396824eaf13338da082918, type: 3}
+  - {fileID: 2800000, guid: 356c439f7b257264e889863674b1b08b, type: 3}
+  - {fileID: 2800000, guid: 84968de4864c77743b67e4fa07a2117a, type: 3}
+  - {fileID: 2800000, guid: c94672e1a35032d49b29f0fda7796c6f, type: 3}
+  - {fileID: 2800000, guid: 7db9ac2083f1b4c4f91a79e22a07a850, type: 3}
+  - {fileID: 2800000, guid: ebefa2b6b858812409845e6e2eea51ff, type: 3}
+  - {fileID: 2800000, guid: b9314f742efe1b44ea11c6df4891d828, type: 3}
+  objects:
+  - {fileID: 191950, guid: 042eeaf3b59df70428b6e0e566bf6ba4, type: 3}
+  - {fileID: 124820, guid: 0e7123a5c1b1fcf46809c4959cd9106e, type: 3}
+  - {fileID: 132520, guid: ea7b79fe0405f7f47af46616f50791e8, type: 3}
+  - {fileID: 183880, guid: e9f688c8735dc4149a8275b01fb2b0a1, type: 3}
+  - {fileID: 174302, guid: d71e3db4d7fc5b84f88839a7c8136302, type: 3}
+  - {fileID: 113118, guid: 329ecda656e9e2e4bbe84e96bf892cc1, type: 3}
   quadRenderer: {fileID: 845284749}
   _cartMovement: {fileID: 1022559052}
   quad: {fileID: 845284747}
@@ -11536,7 +11567,7 @@ Transform:
   m_GameObject: {fileID: 1610701377}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -6.461189, y: 0.41345453, z: -9.748107}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
