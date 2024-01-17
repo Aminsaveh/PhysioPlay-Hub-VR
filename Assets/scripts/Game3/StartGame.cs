@@ -96,8 +96,11 @@ public class StartGame : MonoBehaviour
     {
         int rand = Random.Range(0, 100);
         temp[0].transform.position = placeholders[rand % 3].transform.position;
+        temp[0].transform.Rotate(2f, 15f, 0.0f, Space.Self);
         temp[1].transform.position = placeholders[(rand + 1) % 3].transform.position;
+        temp[1].transform.Rotate(2f, 15f, 0.0f, Space.Self);
         temp[2].transform.position = placeholders[(rand + 2) % 3].transform.position;
+        temp[2].transform.Rotate(2f, 15f, 0.0f, Space.Self);
     }
     
     
