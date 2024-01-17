@@ -7,7 +7,15 @@ using Random = UnityEngine.Random;
 
 public class StartGame : MonoBehaviour
 {
+    private enum GameLevel
+    {
+        Easy = 3,
+        Medium = 6,
+        Hard = 9
+    }
 
+
+    [SerializeField] private GameLevel level;
     [SerializeField] private Texture[] baseMaps;
     [SerializeField] private GameObject[] objects;
     [SerializeField] private GameObject[] placeholders;
@@ -15,13 +23,15 @@ public class StartGame : MonoBehaviour
     [SerializeField] private CartMovement _cartMovement;
     [SerializeField] private GameObject quad;
 
-    private GameObject[] temp = new GameObject[3];
+    private GameObject[] temp;
     
     private bool assignpic = true;
     private int selected;
 
     private void Start()
     {
+        int arraySize = (int)level;
+        temp = new GameObject[arraySize];
         quad.SetActive(false);
         
 
@@ -61,20 +71,26 @@ public class StartGame : MonoBehaviour
         
     }
     
-    private int[] TwoRand(int maxRange, int excludeNumber) {
-        int randomNumber1 = 0;
-        int randomNumber2 = 0;
+    private int[] EightRand(int maxRange, int excludeNumber) {
+        List<int> randomNumbers = new List<int>();
 
-        while (randomNumber1 == excludeNumber) {
-            randomNumber1 = Random.Range(0, maxRange);
+        // Ensure maxRange is at least 8 to find 8 unique numbers
+        if (maxRange < 8) {
+            throw new ArgumentException("maxRange must be at least 8.");
         }
 
-        do {
-            randomNumber2 = Random.Range(0, maxRange);
-        } while (randomNumber2 == excludeNumber || randomNumber2 == randomNumber1);
+        while (randomNumbers.Count < 8) {
+            int randomNumber = Random.Range(0, maxRange);
 
-        return new int[] { randomNumber1, randomNumber2 };
+            // Check if the number is not the excluded number and not already in the list
+            if (randomNumber != excludeNumber && !randomNumbers.Contains(randomNumber)) {
+                randomNumbers.Add(randomNumber);
+            }
+        }
+
+        return randomNumbers.ToArray();
     }
+
 
     private IEnumerator PictureTimer()
     {
@@ -86,21 +102,28 @@ public class StartGame : MonoBehaviour
     private void ObjectAssign()
     {
         temp[0] = Instantiate(objects[selected]);
-        int[] two = TwoRand(6, selected);
-        temp[1] = Instantiate(objects[two[0]]);
-        temp[2] = Instantiate(objects[two[1]]);
+        int[] eight = EightRand(9, selected);
+        for (int i = 1; i <temp.Length ; i++)
+        {
+            temp[i] = Instantiate(objects[eight[i - 1]]);
+
+        }
         PlaceHolderAssign();
     }
 
     private void PlaceHolderAssign()
     {
         int rand = Random.Range(0, 100);
-        temp[0].transform.position = placeholders[rand % 3].transform.position;
-        temp[0].transform.Rotate(2f, 15f, 0.0f, Space.Self);
-        temp[1].transform.position = placeholders[(rand + 1) % 3].transform.position;
-        temp[1].transform.Rotate(2f, 15f, 0.0f, Space.Self);
-        temp[2].transform.position = placeholders[(rand + 2) % 3].transform.position;
-        temp[2].transform.Rotate(2f, 15f, 0.0f, Space.Self);
+        for (int i = 0; i < temp.Length; i++)
+        {
+            temp[i].transform.SetParent(placeholders[(rand + i) % (int)level].transform);
+            
+            // Set the local position of the child to zero to match the parent's position
+            temp[i].transform.localPosition = Vector3.zero;
+
+            // Optionally, if you also want the child to have the same rotation and scale as the parent
+            temp[i].transform.localRotation = Quaternion.identity;
+        }
     }
     
     
