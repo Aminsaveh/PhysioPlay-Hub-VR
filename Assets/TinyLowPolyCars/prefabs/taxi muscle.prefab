@@ -138,7 +138,6 @@ GameObject:
   m_Component:
   - component: {fileID: 879946127649307290}
   - component: {fileID: 3178914788988210612}
-  - component: {fileID: 8837308470519875612}
   m_Layer: 0
   m_Name: taxi muscle
   m_TagString: Interactive
@@ -184,18 +183,6 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 3, y: 3, z: 4}
   m_Center: {x: 0, y: 1, z: 0}
---- !u!114 &8837308470519875612
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7838622382615488908}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d3018b00fe066a649bbb517475d9fbba, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &8502135100366449725
 GameObject:
   m_ObjectHideFlags: 0
