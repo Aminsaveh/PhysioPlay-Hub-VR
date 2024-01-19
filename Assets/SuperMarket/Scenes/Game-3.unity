@@ -11904,7 +11904,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 34d6a23546baac7439892063633817c8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  size: 3
+  size: 9
   baseMaps:
   - {fileID: 2800000, guid: be8aa0dfdc30e9e46a59108ee0cf6976, type: 3}
   - {fileID: 2800000, guid: b461ce2b36b08a14fb7fc710846f7034, type: 3}
@@ -11938,6 +11938,7 @@ MonoBehaviour:
   quadRenderer: {fileID: 845284749}
   _cartMovement: {fileID: 1022559052}
   quad: {fileID: 845284747}
+  obj: {fileID: 2066035168}
 --- !u!4 &1610701379
 Transform:
   m_ObjectHideFlags: 0
