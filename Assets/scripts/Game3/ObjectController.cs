@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -6,7 +7,11 @@ public class ObjectController : MonoBehaviour
 {
     private float rotationSpeed = -500f; // Adjust speed as needed
     private Camera mainCamera;
+    private GameObject selectedObject;
     private bool isRotating = false;
+    private int number = Int32.MaxValue - 1;
+
+    public int Number => number;
 
     private void Start()
     {
@@ -21,9 +26,13 @@ public class ObjectController : MonoBehaviour
             RaycastHit hit;
             Ray ray = mainCamera.ScreenPointToRay(Input.mousePosition);
 
-            if (Physics.Raycast(ray, out hit) && hit.transform == transform)
+            if (Physics.Raycast(ray, out hit))
             {
-                isRotating = true;
+                if (!hit.transform.CompareTag("Untagged")) // Check if the object's tag is not "Untagged"
+                {
+                    selectedObject = hit.transform.gameObject;
+                    isRotating = true;
+                }
             }
         }
 
@@ -31,13 +40,14 @@ public class ObjectController : MonoBehaviour
         if (Input.GetMouseButtonUp(1))
         {
             isRotating = false;
+            selectedObject = null;
         }
 
         // Rotate the object if isRotating is true
-        if (isRotating && Input.GetMouseButton(1))
+        if (isRotating && selectedObject != null && Input.GetMouseButton(1))
         {
             float rotationY = Input.GetAxis("Mouse X") * rotationSpeed * Time.deltaTime;
-            transform.Rotate(0, rotationY, 0, Space.World);
+            selectedObject.transform.Rotate(0, rotationY, 0, Space.World);
         }
 
         // Left mouse button click
@@ -46,17 +56,23 @@ public class ObjectController : MonoBehaviour
             RaycastHit hit;
             Ray ray = mainCamera.ScreenPointToRay(Input.mousePosition);
 
-            if (Physics.Raycast(ray, out hit) && hit.transform == transform)
+            if (Physics.Raycast(ray, out hit))
             {
-                OnObjectClicked();
+                if (!hit.transform.CompareTag("Untagged")) // Check if the object's tag is not "Untagged"
+                {
+                    OnObjectClicked(hit.transform.gameObject);
+                }
             }
         }
     }
 
-    private void OnObjectClicked()
+    public int OnObjectClicked(GameObject obj)
     {
-        // Implement your functionality here
-        Debug.Log(gameObject.name + " was clicked");
+        
+        int.TryParse(obj.tag, out number); // Try parsing the tag to an int, if possible
+
+        return number;
+        
     }
     
 }
