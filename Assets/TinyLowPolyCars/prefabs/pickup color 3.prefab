@@ -45,10 +45,9 @@ GameObject:
   m_Component:
   - component: {fileID: 8915728878568041961}
   - component: {fileID: 579066825170575852}
-  - component: {fileID: 4563933249569222279}
   m_Layer: 0
   m_Name: pickup color 3
-  m_TagString: Interactive
+  m_TagString: 2
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -91,18 +90,6 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 3, y: 3, z: 4}
   m_Center: {x: 0, y: 1, z: 0}
---- !u!114 &4563933249569222279
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1881146553842026363}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d3018b00fe066a649bbb517475d9fbba, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &2889328226438692231
 GameObject:
   m_ObjectHideFlags: 0
