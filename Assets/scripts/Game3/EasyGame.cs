@@ -22,36 +22,45 @@ public class EasyGame : MonoBehaviour
     [SerializeField] private Renderer quadRenderer;
     [SerializeField] private CartMovement _cartMovement;
     [SerializeField] private GameObject quad;
+    [SerializeField] private ObjectController obj;
 
     private GameObject[] temp;
     
     private bool assignpic = true;
-    private int selected;
+    private int selected = Int32.MaxValue;
 
     private void Start()
     {
+        
         int arraySize = (int)size;
         temp = new GameObject[arraySize];
         quad.SetActive(false);
-        
-
     }
 
     // Update is called once per frame
     void Update()
     {
-        if (_cartMovement.Target && assignpic)
+        // print(obj.Number + " " + selected);
+        if (obj.Number == selected)
         {
-            if (baseMaps.Length > 0 && quadRenderer != null)
-            {
-                
-                PictureAssign();
+            Debug.Log("Hi");
+        }
+        else
+        {
 
+            if (_cartMovement.Target && assignpic)
+            {
+                if (baseMaps.Length > 0 && quadRenderer != null)
+                {
+
+                    PictureAssign();
+
+                }
+
+                assignpic = false;
             }
 
-            assignpic = false;
         }
-        
     }
 
     private void PictureAssign()
