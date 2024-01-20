@@ -10,8 +10,13 @@ public class ObjectController : MonoBehaviour
     private GameObject selectedObject;
     private bool isRotating = false;
     private int number = Int32.MaxValue - 1;
+    [SerializeField] private GameManager _gameManager;
 
-    public int Number => number;
+    public int Number
+    {
+        get => number;
+        set => number = value;
+    }
 
     private void Start()
     {
@@ -66,12 +71,12 @@ public class ObjectController : MonoBehaviour
         }
     }
 
-    public int OnObjectClicked(GameObject obj)
+    private void OnObjectClicked(GameObject obj)
     {
         
         int.TryParse(obj.tag, out number); // Try parsing the tag to an int, if possible
 
-        return number;
+        _gameManager.CheckSelected();
         
     }
     
