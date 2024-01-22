@@ -198,7 +198,38 @@ public class GameManager : MonoBehaviour
         }
         else
         {
-            // dooo
+            
+            obj.enabled = false;
+            
+            
+            for (int i = 0; i <temp.Length ; i++)
+            {
+                if (i != obj.Number)
+                {
+                    Destroy(temp[i]);
+                }
+            }
+            
+            
+            
+
+            await Task.Delay(1000);
+            Destroy(temp[obj.Number]);
+            
+            
+            obj.Number = Int32.MaxValue - 1;
+            // tabeye scroe ro inja seda bezan
+            
+            selected++;
+
+            if (selected >= baseMaps.Length)
+            {
+                selected %= baseMaps.Length;
+                pictures = RandGenerator(9);
+            }
+
+            assignpic = true;
+
         }
     }
     
