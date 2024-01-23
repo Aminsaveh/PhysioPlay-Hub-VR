@@ -24,6 +24,7 @@ public class GameManager : MonoBehaviour
     [SerializeField] private CartMovement _cartMovement;
     [SerializeField] private GameObject quad;
     [SerializeField] private ObjectController obj;
+    [SerializeField] private GameTimerScore _score;
 
     [SerializeField] private GameObject[] temp;
     
@@ -46,7 +47,7 @@ public class GameManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        Debug.Log(selected);
+        
         
         if (_cartMovement.Target && assignpic)
         {
@@ -152,88 +153,54 @@ public class GameManager : MonoBehaviour
 
     internal async void CheckSelected()
     {
-        if (obj.Number == pictures[selected])
-        {
-
-            obj.Number = Int32.MaxValue - 1;
-            
+            int selectedobject = Int32.MinValue;
             obj.enabled = false;
-                // for (int i = 1; i <temp.Length ; i++)
-            // {
-            //     Destroy(temp[i]);
-            // }
-            
-            bool isFirstIteration = true;
-
-            foreach (GameObject variable in temp)
-            {
-                if (isFirstIteration)
-                {
-                    isFirstIteration = false; // Set the flag to false after the first iteration.
-                    continue; // Skip the first iteration.
-                }
-
-                Destroy(variable);
-                
-            }
-
-            await Task.Delay(1000);
-            Destroy(temp[0]);
-            // tabeye scroe ro inja seda bezan
-            
-            selected++;
-
-            if (selected >= baseMaps.Length)
-            {
-                selected %= baseMaps.Length;
-                pictures = RandGenerator(9);
-            }
-
-            assignpic = true;
-
-            
-
-
-
-        }
-        else
-        {
-            
-            obj.enabled = false;
-            
             
             for (int i = 0; i <temp.Length ; i++)
             {
-                if (i != obj.Number)
+                if (!temp[i].CompareTag(obj.Tag))
                 {
                     Destroy(temp[i]);
                 }
+                else
+                {
+                    selectedobject = i;
+                }
             }
-            
-            
-            
 
             await Task.Delay(1000);
-            Destroy(temp[obj.Number]);
+            
+            if (obj.Number == pictures[selected])
+            {
+                _score.ScoreCounter();
+            }
+            
+            Destroy(temp[selectedobject]);
             
             
             obj.Number = Int32.MaxValue - 1;
+            obj.Tag = "Hello";
             // tabeye scroe ro inja seda bezan
             
             selected++;
 
-            if (selected >= baseMaps.Length)
+            if (selected < baseMaps.Length)
             {
-                selected %= baseMaps.Length;
-                pictures = RandGenerator(9);
+                assignpic = true;
+            }
+            else
+            {
+                _score.StopStopwatch();
+                await Task.Delay(1000);
+
+                _cartMovement.Resume = true;
+                
             }
 
-            assignpic = true;
+            
 
-        }
     }
-    
-    
+
 }
 
 

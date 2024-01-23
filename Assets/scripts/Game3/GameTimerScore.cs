@@ -4,15 +4,22 @@ using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 
-public class GameTimer : MonoBehaviour
+public class GameTimerScore : MonoBehaviour
 {
     [SerializeField] private TextMeshProUGUI timerText;
     [SerializeField] private CartMovement _cartMovement;
+    [SerializeField] private TextMeshProUGUI scoretext;
     private float startTime;
     
     private bool isRunning = false;
     private bool onetime = true;
     private bool endtimer = false;
+    private int score;
+
+    private void Start()
+    {
+        score = 0;
+    }
 
     void Update()
     {
@@ -35,6 +42,13 @@ public class GameTimer : MonoBehaviour
                 timerText.text = formattedTime;
             }
         }
+    }
+
+
+    public void ScoreCounter()
+    {
+        score++;
+        scoretext.text = score.ToString();
     }
 
     string FormatTime(float timeToFormat)
