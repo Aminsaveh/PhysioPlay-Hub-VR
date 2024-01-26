@@ -23,7 +23,7 @@ public class GameManager : MonoBehaviour
     [SerializeField] private Renderer quadRenderer;
     [SerializeField] private CartMovement _cartMovement;
     [SerializeField] private GameObject quad;
-    [SerializeField] private ObjectController obj;
+    [SerializeField] private ObjectController controller;
     [SerializeField] private GameTimerScore _score;
 
     [SerializeField] private GameObject[] temp;
@@ -36,7 +36,7 @@ public class GameManager : MonoBehaviour
     
     private void Start()
     {
-        obj.enabled = false;
+        controller.enabled = false;
         int arraySize = (int)size;
         temp = new GameObject[arraySize];
         quad.SetActive(false);
@@ -120,7 +120,7 @@ public class GameManager : MonoBehaviour
     {
         yield return new WaitForSeconds(5);
         quad.SetActive(false);
-        obj.enabled = true;
+        controller.enabled = true;
         ObjectAssign();
     }
 
@@ -154,11 +154,11 @@ public class GameManager : MonoBehaviour
     internal async void CheckSelected()
     {
             int selectedobject = Int32.MinValue;
-            obj.enabled = false;
+            controller.enabled = false;
             
             for (int i = 0; i <temp.Length ; i++)
             {
-                if (!temp[i].CompareTag(obj.Tag))
+                if (!temp[i].CompareTag(controller.Tag))
                 {
                     Destroy(temp[i]);
                 }
@@ -170,7 +170,7 @@ public class GameManager : MonoBehaviour
 
             await Task.Delay(1000);
             
-            if (obj.Number == pictures[selected])
+            if (controller.Number == pictures[selected])
             {
                 _score.ScoreCounter();
             }
@@ -178,8 +178,8 @@ public class GameManager : MonoBehaviour
             Destroy(temp[selectedobject]);
             
             
-            obj.Number = Int32.MaxValue - 1;
-            obj.Tag = "Hello";
+            controller.Number = Int32.MaxValue - 1;
+            controller.Tag = "Hello";
             // tabeye scroe ro inja seda bezan
             
             selected++;

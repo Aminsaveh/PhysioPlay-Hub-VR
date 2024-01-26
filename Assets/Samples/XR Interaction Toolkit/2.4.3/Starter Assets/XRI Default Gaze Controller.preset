@@ -461,6 +461,46 @@ Preset:
     value: 
     objectReference: {fileID: 0}
   - target: {fileID: 0}
+    propertyPath: m_UIScrollAction.m_UseReference
+    value: 0
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: m_UIScrollAction.m_Action.m_Name
+    value: UI Scroll
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: m_UIScrollAction.m_Action.m_Type
+    value: 0
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: m_UIScrollAction.m_Action.m_ExpectedControlType
+    value: Vector2
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: m_UIScrollAction.m_Action.m_Id
+    value: ab30a273-c156-4e73-97ba-73f001f409c7
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: m_UIScrollAction.m_Action.m_Processors
+    value: 
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: m_UIScrollAction.m_Action.m_Interactions
+    value: 
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: m_UIScrollAction.m_Action.m_SingletonActionBindings.Array.size
+    value: 0
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: m_UIScrollAction.m_Action.m_Flags
+    value: 0
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: m_UIScrollAction.m_Reference
+    value: 
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
     propertyPath: m_HapticDeviceAction.m_UseReference
     value: 0
     objectReference: {fileID: 0}
