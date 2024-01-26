@@ -8,6 +8,10 @@ public class CartMovement : MonoBehaviour
     
     // The array of checkpoints to move and rotate towards
     [SerializeField] private Transform[] checkpoints;
+    [SerializeField] private GameObject finalscore;
+    [SerializeField] private GameObject timer;
+
+    [SerializeField] private GameTimerScore _score;
 
     private bool startGame = false;
     private bool resume = false;
@@ -35,7 +39,10 @@ public class CartMovement : MonoBehaviour
     private Vector3 startPos;
     private Quaternion startRot;
 
-    void Start () {
+    void Start ()
+    {
+        finalscore.SetActive(false);
+        timer.SetActive(false);
         // Set the initial target to the first checkpoint index
         target = 0;
         // Set the initial lerp ratio to zero
@@ -70,6 +77,7 @@ public class CartMovement : MonoBehaviour
         {
 
             startGame = true;
+            timer.SetActive(true);
             
             if (target < checkpoints.Length & resume)
             {
@@ -96,7 +104,8 @@ public class CartMovement : MonoBehaviour
 
             if (target == checkpoints.Length)
             {
-                Debug.Log("Hi");
+                finalscore.SetActive(true);
+                _score.FinalScore();
             }
         }
 

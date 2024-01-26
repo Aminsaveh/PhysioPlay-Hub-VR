@@ -8,17 +8,22 @@ public class GameTimerScore : MonoBehaviour
 {
     [SerializeField] private TextMeshProUGUI timerText;
     [SerializeField] private CartMovement _cartMovement;
-    [SerializeField] private TextMeshProUGUI scoretext;
+    [SerializeField] private TextMeshProUGUI CorrectText;
+    [SerializeField] private TextMeshProUGUI scoreText;
     private float startTime;
     
     private bool isRunning = false;
     private bool onetime = true;
     private bool endtimer = false;
     private int score;
+    private int minutes;
+    private int seconds;
 
     private void Start()
     {
         score = 0;
+        minutes = 0;
+        seconds = 0;
     }
 
     void Update()
@@ -48,13 +53,13 @@ public class GameTimerScore : MonoBehaviour
     public void ScoreCounter()
     {
         score++;
-        scoretext.text = score.ToString();
+        CorrectText.text = score.ToString();
     }
 
     string FormatTime(float timeToFormat)
     {
-        int minutes = (int)timeToFormat / 60;
-        int seconds = (int)timeToFormat % 60;
+        minutes = (int)timeToFormat / 60;
+        seconds = (int)timeToFormat % 60;
         string formattedTime = string.Format("{0:00}:{1:00}", minutes, seconds);
         return formattedTime;
     }
@@ -71,5 +76,10 @@ public class GameTimerScore : MonoBehaviour
     public void StopStopwatch()
     {
         isRunning = false;
+    }
+
+    public void FinalScore()
+    {
+        scoreText.text = ((int)(score * 1000 / seconds)).ToString();
     }
 }

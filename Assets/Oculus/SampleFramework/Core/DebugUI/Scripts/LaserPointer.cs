@@ -74,6 +74,24 @@ public class LaserPointer : OVRCursor
         OVRManager.InputFocusAcquired += OnInputFocusAcquired;
         OVRManager.InputFocusLost += OnInputFocusLost;
     }
+    
+    // Define a function to show the laser pointer
+    public void ShowLaser(Ray ray)
+    {
+        // Enable the line renderer
+        lineRenderer.enabled = true;
+
+        // Set the start and end positions of the line renderer
+        lineRenderer.SetPosition(0, ray.origin);
+        lineRenderer.SetPosition(1, ray.origin + ray.direction * 100f);
+    }
+
+    // Define a function to hide the laser pointer
+    public void HideLaser()
+    {
+        // Disable the line renderer
+        lineRenderer.enabled = false;
+    }
 
     public override void SetCursorStartDest(Vector3 start, Vector3 dest, Vector3 normal)
     {
