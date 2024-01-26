@@ -24,6 +24,16 @@ public class ShapeController : MonoBehaviour
 
     public List<Level> levels;
     
+    private OVRInput.Controller leftController;
+    private OVRInput.Controller rightController;
+    [SerializeField] private GameObject left;
+    [SerializeField] private GameObject right;
+
+    // Declare a variable for the laser pointer
+    private LineRenderer lineRenderer;
+    
+    
+    
 
 
 
@@ -90,6 +100,13 @@ public class ShapeController : MonoBehaviour
         TurnAllLevelsOff();
         SetSelectedLevel();
         TogglePlaceholderColliders(false);
+        
+        // Initialize the controller variables
+        leftController = OVRInput.Controller.LTouch;
+        rightController = OVRInput.Controller.RTouch;
+
+        // Initialize the laser pointer variable
+        lineRenderer = GetComponent<LineRenderer>();
 
     }
 
@@ -98,54 +115,106 @@ public class ShapeController : MonoBehaviour
     {
         if (CanTakeAction())
         {
-            if (Input.GetMouseButtonDown(0) || Input.GetMouseButtonDown(1))
+            // Left controller button press
+            if (OVRInput.GetDown(OVRInput.Button.PrimaryIndexTrigger, leftController))
             {
-                RaycastHit hit = CastRay();
+                RaycastHit hit;
+                // Get the position and direction of the left controller game object
+                Vector3 position = left.transform.position;
+                Vector3 direction = left.transform.forward;
+                Ray ray = new Ray(position, direction);
 
-                if(hit.collider != null) {
+                // Show the laser pointer
+                ShowLaser(ray);
+
+                if (Physics.Raycast(ray, out hit))
+                {
                     if (!hit.collider.CompareTag("drag")) {
                         return;
                     }
                     selectedShape = hit.collider.gameObject.GetComponent<Shape>();
                     TogglePlaceholderColliders(true);
-                    Cursor.visible = false;
                 }
             }
-            if (Input.GetMouseButtonUp(0))
-                {
-                    SnapToPlaceholder();
-                    Cursor.visible = true;
-                    selectedShape = null;
-                    TogglePlaceholderColliders(false);
-                }
+            // Left controller button release
+            if (OVRInput.GetUp(OVRInput.Button.PrimaryIndexTrigger, leftController))
+            {
+                SetRotationRound();
+                SnapToPlaceholder();
+                selectedShape = null;
+                TogglePlaceholderColliders(false);
+                // Hide the laser pointer
+                HideLaser();
+            }
             
-                if (Input.GetMouseButtonUp(1))
-                {
-                    SetRotationRound();
-                    SnapToPlaceholder();
-                    Cursor.visible = true;
-                }
+            // Right controller button press
+            if (OVRInput.GetDown(OVRInput.Button.PrimaryIndexTrigger, rightController))
+            {
+                RaycastHit hit;
+                // Get the position and direction of the right controller game object
+                Vector3 position = right.transform.position;
+                Vector3 direction = right.transform.forward;
+                Ray ray = new Ray(position, direction);
 
-                if (Input.GetMouseButton(0))
-                {
-                    if(selectedShape != null){
-                        Vector3 position = new Vector3(Input.mousePosition.x, Input.mousePosition.y,
-                            Camera.main.WorldToScreenPoint(selectedShape.transform.position).z);
-                        Vector3 worldPosition = Camera.main.ScreenToWorldPoint(position);
-                        selectedShape.transform.position = new Vector3(worldPosition.x, worldPosition.y, worldPosition.z);
-                    }
-                }
+                // Show the laser pointer
+                ShowLaser(ray);
 
-                if (Input.GetMouseButton(1))
+                if (Physics.Raycast(ray, out hit))
                 {
-                    if (selectedShape != null)
-                    {
-                        float rotX = Input.GetAxis("Mouse X") * 20 * Mathf.Deg2Rad;
-                        float rotY = Input.GetAxis("Mouse Y") * 20 * Mathf.Deg2Rad;
-                        selectedShape.transform.RotateAround(Vector3.up, -rotX);
-                        selectedShape.transform.RotateAround(Vector3.right, rotY);
+                    if (!hit.collider.CompareTag("drag")) {
+                        return;
                     }
+                    selectedShape = hit.collider.gameObject.GetComponent<Shape>();
+                    TogglePlaceholderColliders(true);
                 }
+            }
+            // Right controller button release
+            if (OVRInput.GetUp(OVRInput.Button.PrimaryIndexTrigger, rightController))
+            {
+                SetRotationRound();
+                SnapToPlaceholder();
+                selectedShape = null;
+                TogglePlaceholderColliders(false);
+                // Hide the laser pointer
+                HideLaser();
+            }
+
+            // Move the object with the left controller
+            if (selectedShape != null & OVRInput.Get(OVRInput.Button.PrimaryIndexTrigger, leftController))
+            {
+                RaycastHit hit;
+                // Get the position and direction of the left controller game object
+                Vector3 _position = left.transform.position;
+                Vector3 direction = left.transform.forward;
+                Ray ray = new Ray(_position, direction);
+                lineRenderer.SetPosition(0, ray.origin);
+                lineRenderer.SetPosition(1, ray.origin + ray.direction * 3.8f);
+                Vector3 position = lineRenderer.GetPosition(1);
+                Vector3 worldPosition = transform.TransformPoint(position);
+                selectedShape.transform.position = new Vector3(worldPosition.x, worldPosition.y, worldPosition.z);
+                float rotX = OVRInput.Get(OVRInput.Axis2D.Any, leftController).x * 20 * Mathf.Deg2Rad;
+                float rotY = OVRInput.Get(OVRInput.Axis2D.Any, leftController).y * 20 * Mathf.Deg2Rad;
+                selectedShape.transform.RotateAround(Vector3.up, -rotX);
+                selectedShape.transform.RotateAround(Vector3.right, rotY);
+                
+            } else if (selectedShape != null & OVRInput.Get(OVRInput.Button.PrimaryIndexTrigger, rightController))
+            {
+                RaycastHit hit;
+                // Get the position and direction of the left controller game object
+                Vector3 _position = right.transform.position;
+                Vector3 direction = right.transform.forward;
+                Ray ray = new Ray(_position, direction);
+                lineRenderer.SetPosition(0, ray.origin);
+                lineRenderer.SetPosition(1, ray.origin + ray.direction * 3.8f);
+                Vector3 position = lineRenderer.GetPosition(1);
+                Vector3 worldPosition = transform.TransformPoint(position);
+                selectedShape.transform.position = new Vector3(worldPosition.x, worldPosition.y, worldPosition.z);
+                float rotX = OVRInput.Get(OVRInput.Axis2D.Any, rightController).x * 20 * Mathf.Deg2Rad;
+                float rotY = OVRInput.Get(OVRInput.Axis2D.Any, rightController).y * 20 * Mathf.Deg2Rad;
+                selectedShape.transform.RotateAround(Vector3.up, -rotX);
+                selectedShape.transform.RotateAround(Vector3.right, rotY);
+               
+            }
         }
     }
     
@@ -154,21 +223,22 @@ public class ShapeController : MonoBehaviour
         return !isMoving && !isRotating;
     }
     
-    private RaycastHit CastRay() {
-        Vector3 screenMousePosFar = new Vector3(
-            Input.mousePosition.x,
-            Input.mousePosition.y,
-            Camera.main.farClipPlane);
-        Vector3 screenMousePosNear = new Vector3(
-            Input.mousePosition.x,
-            Input.mousePosition.y,
-            Camera.main.nearClipPlane);
-        Vector3 worldMousePosFar = Camera.main.ScreenToWorldPoint(screenMousePosFar);
-        Vector3 worldMousePosNear = Camera.main.ScreenToWorldPoint(screenMousePosNear);
-        RaycastHit hit;
-        Physics.Raycast(worldMousePosNear, worldMousePosFar - worldMousePosNear, out hit);
+    // Add a new method to show the laser pointer
+    public void ShowLaser(Ray ray)
+    {
+        // Enable the line renderer
+        lineRenderer.enabled = true;
 
-        return hit;
+        // Set the start and end positions of the line renderer
+        lineRenderer.SetPosition(0, ray.origin);
+        lineRenderer.SetPosition(1, ray.origin + ray.direction * 2f);
+    }
+
+    // Add a new method to hide the laser pointer
+    public void HideLaser()
+    {
+        // Disable the line renderer
+        lineRenderer.enabled = false;
     }
     
      void SetRotationRound()
