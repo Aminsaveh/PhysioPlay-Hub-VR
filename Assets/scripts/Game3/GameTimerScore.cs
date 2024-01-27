@@ -80,6 +80,6 @@ public class GameTimerScore : MonoBehaviour
 
     public void FinalScore()
     {
-        scoreText.text = ((int)(score * 1000 / seconds)).ToString();
+        scoreText.text = (score * 1000 / seconds).ToString();
     }
 }

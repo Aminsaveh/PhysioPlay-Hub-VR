@@ -29,10 +29,6 @@ public class CubeController : MonoBehaviour
 
     public Material[] images;
     
-    
-    
-    
-
     //[SerializeField] private List<Cube> cubes;
 
     [SerializeField] private Cube selectedCube;
@@ -51,6 +47,16 @@ public class CubeController : MonoBehaviour
     private Quaternion bottomRotation =Quaternion.Euler(0,0,-90);
     private Quaternion rightRotation = Quaternion.Euler(0,90,0);
     private Quaternion leftRotation = Quaternion.Euler(0,-90,0);
+    
+    
+    private OVRInput.Controller leftController;
+    private OVRInput.Controller rightController;
+    [SerializeField] private GameObject left;
+    [SerializeField] private GameObject right;
+
+    // Declare a variable for the laser pointer
+    private LineRenderer lineRenderer;
+
 
 
 
@@ -117,64 +123,122 @@ public class CubeController : MonoBehaviour
         GenerateCubes((int)puzzleSize); 
         cubePrefab.gameObject.SetActive(false);
         SetNextLevel();
+        
+        // Initialize the controller variables
+        leftController = OVRInput.Controller.LTouch;
+        rightController = OVRInput.Controller.RTouch;
+
+        // Initialize the laser pointer variable
+        lineRenderer = GetComponent<LineRenderer>();
 
     }
 
-    // Update is called once per frame
     void Update()
     {
         if (CanTakeAction())
         {
-            if (Input.GetMouseButtonDown(0) || Input.GetMouseButtonDown(1))
+            // Left controller button press
+            if (OVRInput.GetDown(OVRInput.Button.PrimaryIndexTrigger, leftController))
             {
-                RaycastHit hit = CastRay();
+                RaycastHit hit;
+                // Get the position and direction of the left controller game object
+                Vector3 position = left.transform.position;
+                Vector3 direction = left.transform.forward;
+                Ray ray = new Ray(position, direction);
 
-                if(hit.collider != null) {
+                // Show the laser pointer
+                ShowLaser(ray);
+
+                if (Physics.Raycast(ray, out hit))
+                {
                     if (!hit.collider.CompareTag("drag")) {
                         return;
                     }
                     selectedCube = hit.collider.gameObject.GetComponent<Cube>();
                     TogglePlaceholderColliders(true);
-                    Cursor.visible = false;
                 }
             }
-            if (Input.GetMouseButtonUp(0))
-                {
-                    SnapToPlaceholder();
-                    Cursor.visible = true;
-                    selectedCube = null;
-                    TogglePlaceholderColliders(false);
-                }
+            // Left controller button release
+            if (OVRInput.GetUp(OVRInput.Button.PrimaryIndexTrigger, leftController))
+            {
+                SetRotationRound();
+                SnapToPlaceholder();
+                selectedCube = null;
+                TogglePlaceholderColliders(false);
+                // Hide the laser pointer
+                HideLaser();
+            }
             
-                if (Input.GetMouseButtonUp(1))
-                {
-                    SetRotationRound();
-                    SnapToPlaceholder();
-                    Cursor.visible = true;
-                }
+            // Right controller button press
+            if (OVRInput.GetDown(OVRInput.Button.PrimaryIndexTrigger, rightController))
+            {
+                RaycastHit hit;
+                // Get the position and direction of the right controller game object
+                Vector3 position = right.transform.position;
+                Vector3 direction = right.transform.forward;
+                Ray ray = new Ray(position, direction);
 
-                if (Input.GetMouseButton(0))
-                {
-                    
-                    if(selectedCube != null){
-                        Vector3 position = new Vector3(Input.mousePosition.x, Input.mousePosition.y,
-                            Camera.main.WorldToScreenPoint(selectedCube.transform.position).z);
-                        Vector3 worldPosition = Camera.main.ScreenToWorldPoint(position);
-                        selectedCube.transform.position = new Vector3(worldPosition.x, worldPosition.y, worldPosition.z);
-                    }
-                }
+                // Show the laser pointer
+                ShowLaser(ray);
 
-                if (Input.GetMouseButton(1))
+                if (Physics.Raycast(ray, out hit))
                 {
-                    if (selectedCube != null)
-                    {
-                        float rotX = Input.GetAxis("Mouse X") * 20 * Mathf.Deg2Rad;
-                        float rotY = Input.GetAxis("Mouse Y") * 20 * Mathf.Deg2Rad;
-                        selectedCube.transform.RotateAround(Vector3.up, -rotX);
-                        selectedCube.transform.RotateAround(Vector3.right, rotY);
-                        CalculateFacedEdge();
+                    if (!hit.collider.CompareTag("drag")) {
+                        return;
                     }
+                    selectedCube = hit.collider.gameObject.GetComponent<Cube>();
+                    TogglePlaceholderColliders(true);
                 }
+            }
+            // Right controller button release
+            if (OVRInput.GetUp(OVRInput.Button.PrimaryIndexTrigger, rightController))
+            {
+                SetRotationRound();
+                SnapToPlaceholder();
+                selectedCube = null;
+                TogglePlaceholderColliders(false);
+                // Hide the laser pointer
+                HideLaser();
+            }
+
+            // Move the object with the left controller
+            if (selectedCube != null & OVRInput.Get(OVRInput.Button.PrimaryIndexTrigger, leftController))
+            {
+                RaycastHit hit;
+                // Get the position and direction of the left controller game object
+                Vector3 _position = left.transform.position;
+                Vector3 direction = left.transform.forward;
+                Ray ray = new Ray(_position, direction);
+                lineRenderer.SetPosition(0, ray.origin);
+                lineRenderer.SetPosition(1, ray.origin + ray.direction * 4f);
+                Vector3 position = lineRenderer.GetPosition(1);
+                Vector3 worldPosition = transform.TransformPoint(position);
+                var transform1 = selectedCube.transform;
+                transform1.position = new Vector3(transform1.position.x, worldPosition.y, worldPosition.z);
+                float rotX = OVRInput.Get(OVRInput.Axis2D.Any, leftController).x * 20 * Mathf.Deg2Rad;
+                float rotY = OVRInput.Get(OVRInput.Axis2D.Any, leftController).y * 20 * Mathf.Deg2Rad;
+                selectedCube.transform.RotateAround(Vector3.up, -rotX);
+                selectedCube.transform.RotateAround(Vector3.right, rotY);
+                
+            } else if (selectedCube != null & OVRInput.Get(OVRInput.Button.PrimaryIndexTrigger, rightController))
+            {
+                RaycastHit hit;
+                // Get the position and direction of the left controller game object
+                Vector3 _position = right.transform.position;
+                Vector3 direction = right.transform.forward;
+                Ray ray = new Ray(_position, direction);
+                lineRenderer.SetPosition(0, ray.origin);
+                lineRenderer.SetPosition(1, ray.origin + ray.direction * 4f);
+                Vector3 position = lineRenderer.GetPosition(1);
+                Vector3 worldPosition = transform.TransformPoint(position);
+                var transform1 = selectedCube.transform;
+                transform1.position = new Vector3(transform1.position.x, worldPosition.y, worldPosition.z);
+                float rotX = OVRInput.Get(OVRInput.Axis2D.Any, rightController).x * 20 * Mathf.Deg2Rad;
+                float rotY = OVRInput.Get(OVRInput.Axis2D.Any, rightController).y * 20 * Mathf.Deg2Rad;
+                selectedCube.transform.RotateAround(Vector3.up, -rotX);
+                selectedCube.transform.RotateAround(Vector3.right, rotY);
+               
+            }
         }
     }
     
@@ -183,24 +247,25 @@ public class CubeController : MonoBehaviour
         return !isMoving && !isRotating;
     }
     
-    private RaycastHit CastRay() {
-        Vector3 screenMousePosFar = new Vector3(
-            Input.mousePosition.x,
-            Input.mousePosition.y,
-            Camera.main.farClipPlane);
-        Vector3 screenMousePosNear = new Vector3(
-            Input.mousePosition.x,
-            Input.mousePosition.y,
-            Camera.main.nearClipPlane);
-        Vector3 worldMousePosFar = Camera.main.ScreenToWorldPoint(screenMousePosFar);
-        Vector3 worldMousePosNear = Camera.main.ScreenToWorldPoint(screenMousePosNear);
-        RaycastHit hit;
-        Physics.Raycast(worldMousePosNear, worldMousePosFar - worldMousePosNear, out hit);
+    // Add a new method to show the laser pointer
+    public void ShowLaser(Ray ray)
+    {
+        // Enable the line renderer
+        lineRenderer.enabled = true;
 
-        return hit;
+        // Set the start and end positions of the line renderer
+        lineRenderer.SetPosition(0, ray.origin);
+        lineRenderer.SetPosition(1, ray.origin + ray.direction);
+    }
+
+    // Add a new method to hide the laser pointer
+    public void HideLaser()
+    {
+        // Disable the line renderer
+        lineRenderer.enabled = false;
     }
     
-     void SetRotationRound()
+     public void SetRotationRound()
     {
         if (selectedCube != null)
         {

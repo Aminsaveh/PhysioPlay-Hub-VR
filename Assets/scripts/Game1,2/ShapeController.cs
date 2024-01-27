@@ -188,10 +188,11 @@ public class ShapeController : MonoBehaviour
                 Vector3 direction = left.transform.forward;
                 Ray ray = new Ray(_position, direction);
                 lineRenderer.SetPosition(0, ray.origin);
-                lineRenderer.SetPosition(1, ray.origin + ray.direction * 3.8f);
+                lineRenderer.SetPosition(1, ray.origin + ray.direction * 4f);
                 Vector3 position = lineRenderer.GetPosition(1);
                 Vector3 worldPosition = transform.TransformPoint(position);
-                selectedShape.transform.position = new Vector3(worldPosition.x, worldPosition.y, worldPosition.z);
+                var transform1 = selectedShape.transform;
+                transform1.position = new Vector3(transform1.position.x, worldPosition.y, worldPosition.z);
                 float rotX = OVRInput.Get(OVRInput.Axis2D.Any, leftController).x * 20 * Mathf.Deg2Rad;
                 float rotY = OVRInput.Get(OVRInput.Axis2D.Any, leftController).y * 20 * Mathf.Deg2Rad;
                 selectedShape.transform.RotateAround(Vector3.up, -rotX);
@@ -205,10 +206,11 @@ public class ShapeController : MonoBehaviour
                 Vector3 direction = right.transform.forward;
                 Ray ray = new Ray(_position, direction);
                 lineRenderer.SetPosition(0, ray.origin);
-                lineRenderer.SetPosition(1, ray.origin + ray.direction * 3.8f);
+                lineRenderer.SetPosition(1, ray.origin + ray.direction * 4f);
                 Vector3 position = lineRenderer.GetPosition(1);
                 Vector3 worldPosition = transform.TransformPoint(position);
-                selectedShape.transform.position = new Vector3(worldPosition.x, worldPosition.y, worldPosition.z);
+                var transform1 = selectedShape.transform;
+                transform1.position = new Vector3(transform1.position.x, worldPosition.y, worldPosition.z);
                 float rotX = OVRInput.Get(OVRInput.Axis2D.Any, rightController).x * 20 * Mathf.Deg2Rad;
                 float rotY = OVRInput.Get(OVRInput.Axis2D.Any, rightController).y * 20 * Mathf.Deg2Rad;
                 selectedShape.transform.RotateAround(Vector3.up, -rotX);
