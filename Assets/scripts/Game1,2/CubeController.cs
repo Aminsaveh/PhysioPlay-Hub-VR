@@ -4,6 +4,8 @@ using System.Threading.Tasks;
 using DG.Tweening;
 using Unity.VisualScripting;
 using UnityEngine;
+using GameAnalyticsSDK;
+using GameAnalyticsSDK.Events;
 
 public class CubeController : MonoBehaviour
 {
@@ -117,6 +119,8 @@ public class CubeController : MonoBehaviour
 
     private void Start()
     {
+        GameAnalytics.Initialize();
+
         TurnAllMapsOff();
         SetSelectedMap();
         TogglePlaceholderColliders(false);
@@ -130,6 +134,8 @@ public class CubeController : MonoBehaviour
 
         // Initialize the laser pointer variable
         lineRenderer = GetComponent<LineRenderer>();
+
+        
 
     }
 
@@ -479,8 +485,10 @@ public class CubeController : MonoBehaviour
 
     private async void SetNextLevel()
     {
+        GameAnalytics.NewProgressionEvent(GAProgressionStatus.Complete, "Game-1_Level_" + level);
         await Task.Delay(3000);
         level++;
+        GameAnalytics.NewProgressionEvent(GAProgressionStatus.Start, "Game-1_Level_" + level);
         puzzleOriginalImage.material = images[level-1];
         for (int i = 0; i < selectedMap.placeholders.Count; i++)
         {
