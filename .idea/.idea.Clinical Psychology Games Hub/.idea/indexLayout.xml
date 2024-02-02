@@ -3,7 +3,6 @@
   <component name="ContentModelUserStore">
     <attachedFolders />
     <explicitIncludes>
-      <Path>Assets</Path>
       <Path>Library/PackageCache/com.unity.collab-proxy@2.0.5</Path>
       <Path>Library/PackageCache/com.unity.device-simulator.devices@1.0.0</Path>
       <Path>Library/PackageCache/com.unity.feature.development@1.0.1</Path>

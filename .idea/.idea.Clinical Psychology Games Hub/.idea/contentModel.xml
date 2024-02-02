@@ -145,6 +145,8 @@
           <e p="readme.txt" t="Include" />
         </e>
         <e p="KidsRoom" t="Include">
+          <e p="Game-1" t="Include" />
+          <e p="Game-2" t="Include" />
           <e p="Materials" t="Include" />
           <e p="Mesh" t="Include">
             <e p="00" t="Include" />

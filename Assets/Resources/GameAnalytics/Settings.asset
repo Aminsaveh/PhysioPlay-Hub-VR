@@ -95,7 +95,7 @@ MonoBehaviour:
   CustomDimensions02FoldOut: 0
   CustomDimensions03FoldOut: 0
   ResourceItemTypesFoldOut: 0
-  ResourceCurrenciesFoldOut: 0
+  ResourceCurrenciesFoldOut: 1
   EnableMemoryHistogram: 0
   EnableHealthEvent: 0
   EnableFPSHistogram: 0
