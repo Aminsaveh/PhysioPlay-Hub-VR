@@ -8,9 +8,9 @@ using UnityEngine;
 public enum Form
 {
     Square,
-    
     Rectangle,
-    Pyramid
+    Pyramid,
+    None
 }
 
 public class Shape : MonoBehaviour

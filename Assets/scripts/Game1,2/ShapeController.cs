@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using DG.Tweening;
+using GameAnalyticsSDK;
 using UnityEngine;
 
 public class ShapeController : MonoBehaviour
@@ -97,6 +98,7 @@ public class ShapeController : MonoBehaviour
 
     private void Start()
     {
+        GameAnalytics.Initialize();
         TurnAllLevelsOff();
         SetSelectedLevel();
         TogglePlaceholderColliders(false);
@@ -385,10 +387,12 @@ public class ShapeController : MonoBehaviour
 
     private async void SetNextLevel()
     {
+        GameAnalytics.NewProgressionEvent(GAProgressionStatus.Complete, "Game-2_Level_" + level);
         await Task.Delay(3000);
         ResetShapes();
         selectedLevel.gameObject.SetActive(false);
         level++;
+        GameAnalytics.NewProgressionEvent(GAProgressionStatus.Start, "Game-2_Level_" + level);
         selectedLevel = levels[level - 1];
         selectedLevel.gameObject.SetActive(true);
 
