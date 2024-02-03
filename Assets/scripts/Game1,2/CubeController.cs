@@ -6,6 +6,7 @@ using Unity.VisualScripting;
 using UnityEngine;
 using GameAnalyticsSDK;
 using GameAnalyticsSDK.Events;
+using TMPro;
 
 public class CubeController : MonoBehaviour
 {
@@ -55,6 +56,19 @@ public class CubeController : MonoBehaviour
     private OVRInput.Controller rightController;
     [SerializeField] private GameObject left;
     [SerializeField] private GameObject right;
+    
+    [SerializeField] private TextMeshProUGUI timerText;
+    [SerializeField] private GameObject crossGameObject;
+    [SerializeField] private GameObject tickGameObject;
+
+
+    
+
+
+    private bool isTimerRunning;
+    private float startTime;
+    private int minutes;
+    private int seconds;
 
     // Declare a variable for the laser pointer
     private LineRenderer lineRenderer;
@@ -92,7 +106,11 @@ public class CubeController : MonoBehaviour
                 cube.transform.DOMove(bestFit.transform.position, 1f).OnComplete(() =>
                     {
                         isMoving = false;
-                    CheckIsGameFinished();
+                    bool isGameFinished = CheckIsGameFinished();
+                    if (!isGameFinished)
+                    {
+                        CheckAreAllSetWrong();
+                    }
                 }
                    );
                 Placeholder pastPlaceholder = selectedMap.placeholders.Find(x => x.cube == cube);
@@ -127,6 +145,8 @@ public class CubeController : MonoBehaviour
         GenerateCubes((int)puzzleSize); 
         cubePrefab.gameObject.SetActive(false);
         SetNextLevel();
+        crossGameObject.gameObject.SetActive(false);
+        tickGameObject.gameObject.SetActive(false);
         
         // Initialize the controller variables
         leftController = OVRInput.Controller.LTouch;
@@ -245,6 +265,13 @@ public class CubeController : MonoBehaviour
                 selectedCube.transform.RotateAround(Vector3.right, rotY);
                
             }
+        }
+        
+        if (isTimerRunning)
+        { 
+            float timeElapsed = Time.time - startTime;
+            string formattedTime = FormatTime(timeElapsed);
+            timerText.text = formattedTime;
         }
     }
     
@@ -370,66 +397,90 @@ public class CubeController : MonoBehaviour
 
 
 
-    private void CheckIsGameFinished()
+    private bool CheckIsGameFinished()
     {
-        if(selectedMap.placeholders.Find(it => it.cube == null) != null) return;
+        if(selectedMap.placeholders.Find(it => it.cube == null) != null) return false;
         foreach (var placeholder in selectedMap.placeholders)
         {
             if (level == 1)
             {
-                if(placeholder.cube.cubeFace != CubeFace.Front) return;
+                if(placeholder.cube.cubeFace != CubeFace.Front) return false;
              
-                if(Quaternion.Angle(placeholder.cube.transform.rotation,frontRotation)>=1f) return;
+                if(Quaternion.Angle(placeholder.cube.transform.rotation,frontRotation)>=1f) return false;
           
-                if(placeholder.cube.index != placeholder.index) return;
+                if(placeholder.cube.index != placeholder.index) return false;
             
             }
 
             else if (level == 2)
             {
-                if(placeholder.cube.cubeFace != CubeFace.Top) return;
-                if(Quaternion.Angle(placeholder.cube.transform.rotation,topRotation)>=1f) return;
-                if(placeholder.cube.index != placeholder.index) return;
+                if(placeholder.cube.cubeFace != CubeFace.Top) return false;
+                if(Quaternion.Angle(placeholder.cube.transform.rotation,topRotation)>=1f) return false;
+                if(placeholder.cube.index != placeholder.index) return false;
             }
             
             else if (level == 3)
             {
                 Debug.Log("ImageIndex = 3");
-                if(placeholder.cube.cubeFace != CubeFace.Back) return;
-                if(Quaternion.Angle(placeholder.cube.transform.rotation,backRotation)>=1f) return;
-                if(placeholder.cube.index != placeholder.index) return;
+                if(placeholder.cube.cubeFace != CubeFace.Back) return false;
+                if(Quaternion.Angle(placeholder.cube.transform.rotation,backRotation)>=1f) return false;
+                if(placeholder.cube.index != placeholder.index) return false;
             }
             else if (level == 4)
             {
                 Debug.Log("ImageIndex = 4");
-                if(placeholder.cube.cubeFace != CubeFace.Right) return;
-                if(Quaternion.Angle(placeholder.cube.transform.rotation,rightRotation)>=1f) return;
-                if(placeholder.cube.index != placeholder.index) return;
+                if(placeholder.cube.cubeFace != CubeFace.Right) return false;
+                if(Quaternion.Angle(placeholder.cube.transform.rotation,rightRotation)>=1f) return false;
+                if(placeholder.cube.index != placeholder.index) return false;
             }
             else if (level == 5)
             {
                 Debug.Log("ImageIndex = 5");
-                if(placeholder.cube.cubeFace != CubeFace.Left) return;
-                if(Quaternion.Angle(placeholder.cube.transform.rotation,leftRotation)>=1f) return;
-                if(placeholder.cube.index != placeholder.index) return;
+                if(placeholder.cube.cubeFace != CubeFace.Left) return false;
+                if(Quaternion.Angle(placeholder.cube.transform.rotation,leftRotation)>=1f) return false;
+                if(placeholder.cube.index != placeholder.index) return false;
             }
             else if (level == 6)
             {
                 Debug.Log("ImageIndex = 6");
-                if(placeholder.cube.cubeFace != CubeFace.Bottom) return;
-                if(Quaternion.Angle(placeholder.cube.transform.rotation,bottomRotation)>=1f) return;
-                if(placeholder.cube.index != placeholder.index) return;
+                if(placeholder.cube.cubeFace != CubeFace.Bottom) return false;
+                if(Quaternion.Angle(placeholder.cube.transform.rotation,bottomRotation)>=1f) return false;
+                if(placeholder.cube.index != placeholder.index) return false;
             }
             else
             {
                 Debug.Log("else");
-                return;
+                return false;
             }
             Debug.Log("-----");
         }
-
+        
         SetNextLevel();
         Debug.Log("Win!");
+        return true;
+    }
+
+
+    private void CheckAreAllSetWrong()
+    {
+        bool areAllSetWrong = true;
+        foreach (var placeholder in selectedMap.placeholders)
+        {
+            if (placeholder.cube == null)
+            {
+                areAllSetWrong = false;
+            }
+        }
+
+        if (areAllSetWrong)
+        {
+            crossGameObject.gameObject.SetActive(true);
+        }
+        else
+        {
+            crossGameObject.gameObject.SetActive(false);
+        }
+        
     }
 
 
@@ -484,9 +535,12 @@ public class CubeController : MonoBehaviour
 
 
     private async void SetNextLevel()
-    {
+    {   
+        StopStopwatch();
+        tickGameObject.SetActive(true);
         GameAnalytics.NewProgressionEvent(GAProgressionStatus.Complete, "Game-1_Level_" + level);
         await Task.Delay(3000);
+        StartStopwatch();
         level++;
         GameAnalytics.NewProgressionEvent(GAProgressionStatus.Start, "Game-1_Level_" + level);
         puzzleOriginalImage.material = images[level-1];
@@ -502,7 +556,7 @@ public class CubeController : MonoBehaviour
             }
 
         }
-        
+        tickGameObject.SetActive(false);
     }
 
     private void TurnAllMapsOff()
@@ -510,5 +564,28 @@ public class CubeController : MonoBehaviour
         map2x2.gameObject.SetActive(false);
         map3x3.gameObject.SetActive(false);
         map4x4.gameObject.SetActive(false);
+    }
+    
+    
+    string FormatTime(float timeToFormat)
+    {
+        minutes = (int)timeToFormat / 60;
+        seconds = (int)timeToFormat % 60;
+        string formattedTime = string.Format("{0:00}:{1:00}", minutes, seconds);
+        return formattedTime;
+    }
+    
+    
+    public void StartStopwatch()
+    {
+        isTimerRunning = true;
+        startTime = Time.time;
+        minutes = 0;
+        seconds = 0;
+    }
+
+    public void StopStopwatch()
+    {
+        isTimerRunning = false;
     }
 }
