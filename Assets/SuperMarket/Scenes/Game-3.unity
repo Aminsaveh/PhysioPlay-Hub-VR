@@ -13179,6 +13179,9 @@ MonoBehaviour:
   quad: {fileID: 845284747}
   controller: {fileID: 1610701381}
   _score: {fileID: 1610701380}
+  position:
+  - {fileID: 0}
+  - {fileID: 0}
   temp: []
 --- !u!4 &1610701379
 Transform:

@@ -25,8 +25,10 @@ public class GameManager : MonoBehaviour
     [SerializeField] private GameObject quad;
     [SerializeField] private ObjectController controller;
     [SerializeField] private GameTimerScore _score;
-
+    [SerializeField] private Transform[] position;
+    
     [SerializeField] private GameObject[] temp;
+   
     
     private bool assignpic = true;
     private int selected;
@@ -75,6 +77,8 @@ public class GameManager : MonoBehaviour
         gameObject.SetActive(true);
                 
         quad.SetActive(true);
+        
+        
         
         StartCoroutine(PictureTimer());
         

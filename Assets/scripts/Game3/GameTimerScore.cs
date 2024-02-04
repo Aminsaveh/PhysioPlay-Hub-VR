@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Globalization;
 using TMPro;
 using UnityEngine;
 
@@ -24,6 +25,7 @@ public class GameTimerScore : MonoBehaviour
         score = 0;
         minutes = 0;
         seconds = 0;
+      
     }
 
     void Update()
@@ -47,6 +49,7 @@ public class GameTimerScore : MonoBehaviour
                 timerText.text = formattedTime;
             }
         }
+        FinalScore();
     }
 
 
@@ -80,6 +83,6 @@ public class GameTimerScore : MonoBehaviour
 
     public void FinalScore()
     {
-        scoreText.text = (score * 1000 / seconds).ToString();
+        scoreText.text = ((score * 1000) / (Time.time - startTime)).ToString();
     }
 }
