@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using DG.Tweening;
 using GameAnalyticsSDK;
+using TMPro;
 using UnityEngine;
 
 public class ShapeController : MonoBehaviour
@@ -29,16 +30,25 @@ public class ShapeController : MonoBehaviour
     private OVRInput.Controller rightController;
     [SerializeField] private GameObject left;
     [SerializeField] private GameObject right;
+    
+    
+    
+    [SerializeField] private TextMeshProUGUI timerText;
+    [SerializeField] private GameObject crossGameObject;
+    [SerializeField] private GameObject tickGameObject;
+    
+
+
+
+    private bool isTimerRunning;
+    private float startTime;
+    private int minutes;
+    private int seconds;
 
     // Declare a variable for the laser pointer
     private LineRenderer lineRenderer;
     
     
-    
-
-
-
-
     void SnapToPlaceholder()
     {
         if (selectedShape != null)
@@ -68,8 +78,12 @@ public class ShapeController : MonoBehaviour
                 shape.transform.DOMove(bestFit.transform.position, 1f).OnComplete(() =>
                     {
                         isMoving = false;
-                    CheckIsGameFinished();
-                }
+                    bool isGameFinished = CheckIsGameFinished();
+                    if (!isGameFinished)
+                    {
+                        CheckAreAllSetWrong();
+                    }
+                    }
                    );
                 ShapePlaceholder pastPlaceholder = selectedLevel.placeholders.Find(x => x.shape == shape);
                 if (pastPlaceholder != null)
@@ -102,6 +116,8 @@ public class ShapeController : MonoBehaviour
         TurnAllLevelsOff();
         SetSelectedLevel();
         TogglePlaceholderColliders(false);
+        crossGameObject.gameObject.SetActive(false);
+        tickGameObject.gameObject.SetActive(false);
         
         // Initialize the controller variables
         leftController = OVRInput.Controller.LTouch;
@@ -220,8 +236,14 @@ public class ShapeController : MonoBehaviour
                
             }
         }
+        if (isTimerRunning)
+        { 
+            float timeElapsed = Time.time - startTime;
+            string formattedTime = FormatTime(timeElapsed);
+            timerText.text = formattedTime;
+        }
     }
-    
+
     bool CanTakeAction()
     {
         return !isMoving && !isRotating;
@@ -316,7 +338,7 @@ public class ShapeController : MonoBehaviour
 
 
 
-    private void CheckIsGameFinished()
+    private bool CheckIsGameFinished()
     {
         bool areAllShapesSet = true;
         foreach (ShapePlaceholder placeholder in selectedLevel.placeholders)
@@ -344,6 +366,30 @@ public class ShapeController : MonoBehaviour
         {
             Debug.Log("WIN");
             SetNextLevel();
+        }
+
+        return areAllShapesSet;
+    }
+    
+    
+    private void CheckAreAllSetWrong()
+    {
+        bool areAllShapesSetWrong = true;
+        foreach (ShapePlaceholder placeholder in selectedLevel.placeholders)
+        {
+            if (placeholder.shape == null)
+            {
+                areAllShapesSetWrong = false;
+                break;
+            }
+        }
+        if (areAllShapesSetWrong && selectedLevel.placeholders.Count > 0)
+        {
+           crossGameObject.SetActive(true);
+        }
+        else
+        {
+            crossGameObject.SetActive(false);   
         }
     }
 
@@ -374,6 +420,8 @@ public class ShapeController : MonoBehaviour
 
     private void SetSelectedLevel()
     {
+        StartStopwatch();
+        GameAnalytics.NewProgressionEvent(GAProgressionStatus.Start, "Game-2_Level_" + level);
         selectedLevel = levels[level-1];
         selectedLevel.gameObject.SetActive(true);
     }
@@ -387,6 +435,8 @@ public class ShapeController : MonoBehaviour
 
     private async void SetNextLevel()
     {
+        StopStopwatch();
+        tickGameObject.gameObject.SetActive(true);
         GameAnalytics.NewProgressionEvent(GAProgressionStatus.Complete, "Game-2_Level_" + level);
         await Task.Delay(3000);
         ResetShapes();
@@ -395,6 +445,8 @@ public class ShapeController : MonoBehaviour
         GameAnalytics.NewProgressionEvent(GAProgressionStatus.Start, "Game-2_Level_" + level);
         selectedLevel = levels[level - 1];
         selectedLevel.gameObject.SetActive(true);
+        StartStopwatch();
+        tickGameObject.gameObject.SetActive(false);
 
     }
 
@@ -413,5 +465,28 @@ public class ShapeController : MonoBehaviour
         {
             level.gameObject.SetActive(false);
         }
+    }
+    
+    
+    string FormatTime(float timeToFormat)
+    {
+        minutes = (int)timeToFormat / 60;
+        seconds = (int)timeToFormat % 60;
+        string formattedTime = string.Format("{0:00}:{1:00}", minutes, seconds);
+        return formattedTime;
+    }
+    
+    
+    public void StartStopwatch()
+    {
+        isTimerRunning = true;
+        startTime = Time.time;
+        minutes = 0;
+        seconds = 0;
+    }
+
+    public void StopStopwatch()
+    {
+        isTimerRunning = false;
     }
 }
