@@ -47,7 +47,7 @@ GameObject:
   - component: {fileID: -9015730830605327057}
   m_Layer: 0
   m_Name: muscle type c color 2
-  m_TagString: Interactive
+  m_TagString: 20
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0

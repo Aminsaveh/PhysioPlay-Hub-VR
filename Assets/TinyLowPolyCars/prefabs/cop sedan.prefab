@@ -175,7 +175,7 @@ GameObject:
   - component: {fileID: 9027418888827698652}
   m_Layer: 0
   m_Name: cop sedan
-  m_TagString: Interactive
+  m_TagString: 12
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0

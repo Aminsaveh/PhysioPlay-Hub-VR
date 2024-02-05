@@ -140,7 +140,7 @@ GameObject:
   - component: {fileID: 3178914788988210612}
   m_Layer: 0
   m_Name: taxi muscle
-  m_TagString: Interactive
+  m_TagString: 10
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0

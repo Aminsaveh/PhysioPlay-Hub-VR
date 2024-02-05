@@ -42,7 +42,7 @@ public class GameManager : MonoBehaviour
         int arraySize = (int)size;
         temp = new GameObject[arraySize];
         quad.SetActive(false);
-        pictures = RandGenerator(9);
+        pictures = RandGenerator(25);
         selected = 0;
     }
 
@@ -77,9 +77,13 @@ public class GameManager : MonoBehaviour
         gameObject.SetActive(true);
                 
         quad.SetActive(true);
+        //quad.gameObject.transform.GetChild(0).gameObject.SetActive(true);
+        quad.transform.position = position[0].position;
+        quad.transform.rotation = position[0].rotation;
         
-        
-        
+
+
+
         StartCoroutine(PictureTimer());
         
     }
@@ -87,9 +91,9 @@ public class GameManager : MonoBehaviour
     private int[] RandWithExclude(int maxRange, int excludeNumber) {
         List<int> randomNumbers = new List<int>();
 
-        // Ensure maxRange is at least 8 to find 8 unique numbers
-        if (maxRange < 8) {
-            throw new ArgumentException("maxRange must be at least 8.");
+        // Ensure maxRange is at least 24 to find 24 unique numbers
+        if (maxRange < 24) {
+            throw new ArgumentException("maxRange must be at least 24.");
         }
 
         while (randomNumbers.Count < maxRange - 1) {
@@ -123,7 +127,10 @@ public class GameManager : MonoBehaviour
     private IEnumerator PictureTimer()
     {
         yield return new WaitForSeconds(5);
-        quad.SetActive(false);
+        //quad.SetActive(false);
+        
+        quad.transform.position = position[1].position;
+        quad.transform.rotation = position[1].rotation;
         controller.enabled = true;
         ObjectAssign();
     }
@@ -131,7 +138,7 @@ public class GameManager : MonoBehaviour
     private void ObjectAssign()
     {
         temp[0] = Instantiate(objects[pictures[selected]]);
-        int[] eight = RandWithExclude(9, pictures[selected]);
+        int[] eight = RandWithExclude(25, pictures[selected]);
         for (int i = 1; i <temp.Length ; i++)
         {
             temp[i] = Instantiate(objects[eight[i - 1]]);
@@ -196,6 +203,7 @@ public class GameManager : MonoBehaviour
             {
                 _score.StopStopwatch();
                 await Task.Delay(1000);
+                quad.SetActive(false);
 
                 _cartMovement.Resume = true;
                 

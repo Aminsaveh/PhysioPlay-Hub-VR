@@ -49,7 +49,6 @@ public class GameTimerScore : MonoBehaviour
                 timerText.text = formattedTime;
             }
         }
-        FinalScore();
     }
 
 
@@ -83,6 +82,6 @@ public class GameTimerScore : MonoBehaviour
 
     public void FinalScore()
     {
-        scoreText.text = ((score * 1000) / (Time.time - startTime)).ToString();
+        scoreText.text = ((score * 1000) / (Time.time - startTime)).ToString("0000");
     }
 }
