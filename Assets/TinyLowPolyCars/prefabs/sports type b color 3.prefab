@@ -79,7 +79,7 @@ GameObject:
   - component: {fileID: 4547666624395660481}
   m_Layer: 0
   m_Name: sports type b color 3
-  m_TagString: Interactive
+  m_TagString: 24
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
