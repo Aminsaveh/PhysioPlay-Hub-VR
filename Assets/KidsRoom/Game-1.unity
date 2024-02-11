@@ -157,7 +157,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   cube: {fileID: 0}
   collider: {fileID: 19394640}
-  index: 9
+  index: 10
 --- !u!65 &19394640
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -834,7 +834,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   cube: {fileID: 0}
   collider: {fileID: 67869155}
-  index: 9
+  index: 13
 --- !u!65 &67869155
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -2884,7 +2884,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   cube: {fileID: 0}
   collider: {fileID: 222977244}
-  index: 9
+  index: 11
 --- !u!65 &222977244
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -4149,7 +4149,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   cube: {fileID: 0}
   collider: {fileID: 358980639}
-  index: 9
+  index: 12
 --- !u!65 &358980639
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -4708,7 +4708,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   cube: {fileID: 0}
   collider: {fileID: 448971891}
-  index: 9
+  index: 14
 --- !u!65 &448971891
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -7147,7 +7147,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!65 &733583481
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -11499,7 +11499,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   cube: {fileID: 0}
   collider: {fileID: 1340850825}
-  index: 9
+  index: 16
 --- !u!65 &1340850825
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -11617,8 +11617,8 @@ RectTransform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 1533832283}
-  - {fileID: 1495016715}
   - {fileID: 1664632423}
+  - {fileID: 1495016715}
   m_Father: {fileID: 857149076}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
@@ -12868,7 +12868,7 @@ RectTransform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1495016714}
-  m_LocalRotation: {x: 0, y: 1, z: 0, w: 0}
+  m_LocalRotation: {x: -0, y: 1, z: -0, w: 0}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -12877,7 +12877,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 180, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0.015, y: -0.137}
+  m_AnchoredPosition: {x: 0.014999988, y: -0.13699996}
   m_SizeDelta: {x: 0.45, y: 0.49}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1495016716
@@ -14214,7 +14214,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   cube: {fileID: 0}
   collider: {fileID: 1612649744}
-  index: 9
+  index: 15
 --- !u!65 &1612649744
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -16346,7 +16346,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &1796207807
 Transform:
   m_ObjectHideFlags: 0
@@ -17367,7 +17367,7 @@ MonoBehaviour:
   selectedCube: {fileID: 0}
   selectedMap: {fileID: 0}
   level: 0
-  puzzleSize: 16
+  puzzleSize: 4
   puzzleOriginalImage: {fileID: 1406463357}
   left: {fileID: 621696643}
   right: {fileID: 2076965141}

@@ -161,6 +161,7 @@ public class CubeController : MonoBehaviour
 
     void Update()
     {
+
         if (CanTakeAction())
         {
             // Left controller button press
@@ -238,11 +239,11 @@ public class CubeController : MonoBehaviour
                 lineRenderer.SetPosition(0, ray.origin);
                 lineRenderer.SetPosition(1, ray.origin + ray.direction * 4f);
                 Vector3 position = lineRenderer.GetPosition(1);
-                Vector3 worldPosition = transform.TransformPoint(position);
+                Vector3 worldPosition = left.transform.TransformPoint(position);
                 var transform1 = selectedCube.transform;
-                transform1.position = new Vector3(transform1.position.x, worldPosition.y, worldPosition.z);
-                float rotX = OVRInput.Get(OVRInput.Axis2D.Any, leftController).x * 20 * Mathf.Deg2Rad;
-                float rotY = OVRInput.Get(OVRInput.Axis2D.Any, leftController).y * 20 * Mathf.Deg2Rad;
+                transform1.position = new Vector3(transform1.position.x, left.transform.position.y, left.transform.position.z);
+                float rotX = OVRInput.Get(OVRInput.Axis2D.Any, leftController).x * 1 * Mathf.Deg2Rad;
+                float rotY = OVRInput.Get(OVRInput.Axis2D.Any, leftController).y * 1 * Mathf.Deg2Rad;
                 selectedCube.transform.RotateAround(Vector3.up, -rotX);
                 selectedCube.transform.RotateAround(Vector3.right, rotY);
                 
@@ -258,9 +259,9 @@ public class CubeController : MonoBehaviour
                 Vector3 position = lineRenderer.GetPosition(1);
                 Vector3 worldPosition = transform.TransformPoint(position);
                 var transform1 = selectedCube.transform;
-                transform1.position = new Vector3(transform1.position.x, worldPosition.y, worldPosition.z);
-                float rotX = OVRInput.Get(OVRInput.Axis2D.Any, rightController).x * 20 * Mathf.Deg2Rad;
-                float rotY = OVRInput.Get(OVRInput.Axis2D.Any, rightController).y * 20 * Mathf.Deg2Rad;
+                transform1.position = new Vector3(transform1.position.x, right.transform.position.y, right.transform.position.z);
+                float rotX = OVRInput.Get(OVRInput.Axis2D.Any, rightController).x * 1 * Mathf.Deg2Rad;
+                float rotY = OVRInput.Get(OVRInput.Axis2D.Any, rightController).y * 1 * Mathf.Deg2Rad;
                 selectedCube.transform.RotateAround(Vector3.up, -rotX);
                 selectedCube.transform.RotateAround(Vector3.right, rotY);
                
@@ -475,6 +476,7 @@ public class CubeController : MonoBehaviour
         if (areAllSetWrong)
         {
             crossGameObject.gameObject.SetActive(true);
+            SetCubesBack();
         }
         else
         {
@@ -544,6 +546,13 @@ public class CubeController : MonoBehaviour
         level++;
         GameAnalytics.NewProgressionEvent(GAProgressionStatus.Start, "Game-1_Level_" + level);
         puzzleOriginalImage.material = images[level-1];
+        SetCubesBack();
+        tickGameObject.SetActive(false);
+    }
+
+
+    private void SetCubesBack()
+    {
         for (int i = 0; i < selectedMap.placeholders.Count; i++)
         {
             if (selectedMap.placeholders[i].cube != null)
@@ -556,7 +565,6 @@ public class CubeController : MonoBehaviour
             }
 
         }
-        tickGameObject.SetActive(false);
     }
 
     private void TurnAllMapsOff()
