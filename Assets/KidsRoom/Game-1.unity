@@ -17367,7 +17367,7 @@ MonoBehaviour:
   selectedCube: {fileID: 0}
   selectedMap: {fileID: 0}
   level: 0
-  puzzleSize: 16
+  puzzleSize: 9
   puzzleOriginalImage: {fileID: 1406463357}
   left: {fileID: 621696643}
   right: {fileID: 2076965141}

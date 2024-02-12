@@ -126,7 +126,7 @@ public class GameManager : MonoBehaviour
 
     private IEnumerator PictureTimer()
     {
-        yield return new WaitForSeconds(5);
+        yield return new WaitForSeconds(3);
         //quad.SetActive(false);
         
         quad.transform.position = position[1].position;
@@ -195,7 +195,7 @@ public class GameManager : MonoBehaviour
             
             selected++;
 
-            if (selected < baseMaps.Length)
+            if (selected < 9 ) //baseMaps.Length
             {
                 assignpic = true;
             }
@@ -204,7 +204,7 @@ public class GameManager : MonoBehaviour
                 _score.StopStopwatch();
                 await Task.Delay(1000);
                 quad.SetActive(false);
-
+                _score.FinalScore();
                 _cartMovement.Resume = true;
                 
             }
