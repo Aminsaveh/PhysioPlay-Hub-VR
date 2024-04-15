@@ -4,9 +4,8 @@ using System.Threading.Tasks;
 using DG.Tweening;
 using Unity.VisualScripting;
 using UnityEngine;
-using GameAnalyticsSDK;
-using GameAnalyticsSDK.Events;
 using TMPro;
+using UnityEngine.SceneManagement;
 
 public class CubeController : MonoBehaviour
 {
@@ -137,7 +136,7 @@ public class CubeController : MonoBehaviour
 
     private void Start()
     {
-        GameAnalytics.Initialize();
+        
 
         TurnAllMapsOff();
         SetSelectedMap();
@@ -178,6 +177,9 @@ public class CubeController : MonoBehaviour
 
                 if (Physics.Raycast(ray, out hit))
                 {
+                    if (!hit.collider.CompareTag("Finish")) {
+                        Next();
+                    }
                     if (!hit.collider.CompareTag("drag")) {
                         return;
                     }
@@ -210,6 +212,9 @@ public class CubeController : MonoBehaviour
 
                 if (Physics.Raycast(ray, out hit))
                 {
+                    if (!hit.collider.CompareTag("Finish")) {
+                        Next();
+                    }
                     if (!hit.collider.CompareTag("drag")) {
                         return;
                     }
@@ -540,11 +545,11 @@ public class CubeController : MonoBehaviour
     {   
         StopStopwatch();
         tickGameObject.SetActive(true);
-        GameAnalytics.NewProgressionEvent(GAProgressionStatus.Complete, "Game-1_Level_" + level);
+        
         await Task.Delay(3000);
         StartStopwatch();
         level++;
-        GameAnalytics.NewProgressionEvent(GAProgressionStatus.Start, "Game-1_Level_" + level);
+       
         puzzleOriginalImage.material = images[level-1];
         SetCubesBack();
         tickGameObject.SetActive(false);
@@ -595,5 +600,11 @@ public class CubeController : MonoBehaviour
     public void StopStopwatch()
     {
         isTimerRunning = false;
+    }
+
+    public void Next()
+    {
+        int scene = SceneManager.GetActiveScene().buildIndex;
+        SceneManager.LoadScene((scene + 1) % 3);
     }
 }

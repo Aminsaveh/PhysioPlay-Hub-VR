@@ -2,9 +2,9 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using DG.Tweening;
-using GameAnalyticsSDK;
 using TMPro;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class ShapeController : MonoBehaviour
 {
@@ -112,7 +112,7 @@ public class ShapeController : MonoBehaviour
 
     private void Start()
     {
-        GameAnalytics.Initialize();
+       
         TurnAllLevelsOff();
         SetSelectedLevel();
         TogglePlaceholderColliders(false);
@@ -147,6 +147,9 @@ public class ShapeController : MonoBehaviour
 
                 if (Physics.Raycast(ray, out hit))
                 {
+                    if (!hit.collider.CompareTag("Finish")) {
+                        Next();
+                    }
                     if (!hit.collider.CompareTag("drag")) {
                         return;
                     }
@@ -179,6 +182,9 @@ public class ShapeController : MonoBehaviour
 
                 if (Physics.Raycast(ray, out hit))
                 {
+                    if (!hit.collider.CompareTag("Finish")) {
+                        Next();
+                    }
                     if (!hit.collider.CompareTag("drag")) {
                         return;
                     }
@@ -421,7 +427,7 @@ public class ShapeController : MonoBehaviour
     private void SetSelectedLevel()
     {
         StartStopwatch();
-        GameAnalytics.NewProgressionEvent(GAProgressionStatus.Start, "Game-2_Level_" + level);
+       
         selectedLevel = levels[level-1];
         selectedLevel.gameObject.SetActive(true);
     }
@@ -437,12 +443,12 @@ public class ShapeController : MonoBehaviour
     {
         StopStopwatch();
         tickGameObject.gameObject.SetActive(true);
-        GameAnalytics.NewProgressionEvent(GAProgressionStatus.Complete, "Game-2_Level_" + level);
+        
         await Task.Delay(3000);
         ResetShapes();
         selectedLevel.gameObject.SetActive(false);
         level++;
-        GameAnalytics.NewProgressionEvent(GAProgressionStatus.Start, "Game-2_Level_" + level);
+        
         selectedLevel = levels[level - 1];
         selectedLevel.gameObject.SetActive(true);
         StartStopwatch();
@@ -488,5 +494,11 @@ public class ShapeController : MonoBehaviour
     public void StopStopwatch()
     {
         isTimerRunning = false;
+    }
+    
+    public void Next()
+    {
+        int scene = SceneManager.GetActiveScene().buildIndex;
+        SceneManager.LoadScene((scene + 1) % 2);
     }
 }
