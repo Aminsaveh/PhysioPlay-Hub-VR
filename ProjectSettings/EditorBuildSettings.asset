@@ -4,7 +4,16 @@
 EditorBuildSettings:
   m_ObjectHideFlags: 0
   serializedVersion: 2
-  m_Scenes: []
+  m_Scenes:
+  - enabled: 1
+    path: Assets/KidsRoom/Game-1.unity
+    guid: 86ca445c70731fe42830169c0dd75dc6
+  - enabled: 1
+    path: Assets/KidsRoom/Game-2.unity
+    guid: 6304a9552409ab740990bad9fc6d09d8
+  - enabled: 1
+    path: Assets/SuperMarket/Scenes/Game-3.unity
+    guid: e8a38ce024bda0649bc6f5f575f35bd3
   m_configObjects:
     Unity.XR.Oculus.Settings: {fileID: 11400000, guid: 07b8e1787ffd86a4a9f6e47798df4248, type: 2}
     com.unity.input.settings: {fileID: 11400000, guid: 411fffc3488c85844a020e10676bdee3, type: 2}
