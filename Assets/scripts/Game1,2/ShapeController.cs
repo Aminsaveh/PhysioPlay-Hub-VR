@@ -131,8 +131,30 @@ public class ShapeController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        
+        if (OVRInput.GetDown(OVRInput.Button.One))
+        {
+            Next();
+        }
+            
+        if (OVRInput.GetDown(OVRInput.Button.Two))
+        {
+            Next();
+        }
+            
+        if (OVRInput.GetDown(OVRInput.Button.Three))
+        {
+            Next();
+        }
+            
+        if (OVRInput.GetDown(OVRInput.Button.Four))
+        {
+            Next();
+        }
+        
         if (CanTakeAction())
         {
+
             // Left controller button press
             if (OVRInput.GetDown(OVRInput.Button.PrimaryIndexTrigger, leftController))
             {
@@ -147,9 +169,7 @@ public class ShapeController : MonoBehaviour
 
                 if (Physics.Raycast(ray, out hit))
                 {
-                    if (!hit.collider.CompareTag("Finish")) {
-                        Next();
-                    }
+                    
                     if (!hit.collider.CompareTag("drag")) {
                         return;
                     }
@@ -182,9 +202,6 @@ public class ShapeController : MonoBehaviour
 
                 if (Physics.Raycast(ray, out hit))
                 {
-                    if (!hit.collider.CompareTag("Finish")) {
-                        Next();
-                    }
                     if (!hit.collider.CompareTag("drag")) {
                         return;
                     }
@@ -496,9 +513,11 @@ public class ShapeController : MonoBehaviour
         isTimerRunning = false;
     }
     
+        
     public void Next()
     {
         int scene = SceneManager.GetActiveScene().buildIndex;
-        SceneManager.LoadScene((scene + 1) % 2);
+        SceneManager.LoadScene((scene + 1) % 3);
     }
+
 }
