@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using OculusSampleFramework;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.XR;
 
 public class ObjectController : MonoBehaviour
@@ -68,6 +69,27 @@ public class ObjectController : MonoBehaviour
 
     private void Update()
     {
+        
+        if (OVRInput.GetDown(OVRInput.Button.One))
+        {
+            Next();
+        }
+            
+        if (OVRInput.GetDown(OVRInput.Button.Two))
+        {
+            Next();
+        }
+            
+        if (OVRInput.GetDown(OVRInput.Button.Three))
+        {
+            Next();
+        }
+            
+        if (OVRInput.GetDown(OVRInput.Button.Four))
+        {
+            Next();
+        }
+        
         // Left controller button press
         if (OVRInput.GetDown(OVRInput.Button.PrimaryIndexTrigger, leftController))
         {
@@ -147,6 +169,12 @@ public class ObjectController : MonoBehaviour
 
         _gameManager.CheckSelected();
         
+    }
+    
+    public void Next()
+    {
+        int scene = SceneManager.GetActiveScene().buildIndex;
+        SceneManager.LoadScene((scene + 1) % 3);
     }
     
 }
